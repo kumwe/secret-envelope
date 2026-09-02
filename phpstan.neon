@@ -1,0 +1,17 @@
+parameters:
+  level: max
+  phpVersion: 80500
+  paths:
+    - src
+    - tests
+    - tools
+    - examples
+    - resources/toolchain
+  tmpDir: .phpstan.cache
+  treatPhpDocTypesAsCertain: false
+  reportUnmatchedIgnoredErrors: true
+  checkUninitializedProperties: true
+
+includes:
+  - vendor/phpstan/phpstan-strict-rules/rules.neon
+  - vendor/phpstan/phpstan-deprecation-rules/rules.neon

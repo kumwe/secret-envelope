@@ -1,0 +1,70 @@
+{
+  "name": "kumwe/secret-envelope",
+  "description": "Portable authenticated encrypted-envelope contracts for the Kumwe family: the versioned envelope value, key identifiers, key material and key-ring values, purpose separation, the cipher and key-provider ports, and the libsodium XChaCha20-Poly1305 implementation. Key custody, rotation and audit stay with the host.",
+  "type": "library",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/kumwe/secret-envelope",
+  "support": {
+    "issues": "https://github.com/kumwe/secret-envelope/issues",
+    "source": "https://github.com/kumwe/secret-envelope"
+  },
+  "require": {
+    "php": "^8.5",
+    "ext-sodium": "*",
+    "psr/container": "^2.0"
+  },
+  "require-dev": {
+    "laminas/laminas-servicemanager": "^4.5",
+    "phpstan/phpstan": "^2.1",
+    "phpstan/phpstan-deprecation-rules": "^2.0",
+    "phpstan/phpstan-strict-rules": "^2.0",
+    "squizlabs/php_codesniffer": "^4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Kumwe\\Secret\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Kumwe\\Secret\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "composer:validate": "composer validate --strict",
+    "lint": "php tools/lint.php",
+    "docs": "php tools/check-docblocks.php",
+    "architecture": "php tools/verify-architecture.php",
+    "api": "php tools/verify-public-api.php",
+    "api:record": "php tools/verify-public-api.php --write",
+    "manifests": "php tools/verify-manifests.php",
+    "handoff": "php tools/verify-handoff.php",
+    "autoload:smoke": "php resources/toolchain/autoload-smoke.php",
+    "cs": "phpcs -q",
+    "cs:fix": "phpcbf",
+    "analyse": "phpstan analyse --no-progress --memory-limit=1G",
+    "test": "php tests/run.php",
+    "examples": "php tools/run-examples.php",
+    "consumer": "php tools/clean-consumer.php",
+    "check": [
+      "@composer:validate",
+      "@lint",
+      "@docs",
+      "@architecture",
+      "@api",
+      "@manifests",
+      "@handoff",
+      "@autoload:smoke",
+      "@cs",
+      "@analyse",
+      "@test",
+      "@examples",
+      "@consumer"
+    ]
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}
