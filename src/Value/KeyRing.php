@@ -114,6 +114,9 @@ final readonly class KeyRing
      */
     public function keyIds(): array
     {
-        return [$this->active->keyId, ...array_keys($this->previous)];
+        return [$this->active->keyId, ...array_map(
+            static fn (KeyMaterial $key): string => $key->keyId,
+            array_values($this->previous),
+        )];
     }
 }

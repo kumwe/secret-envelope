@@ -18,6 +18,22 @@ use Kumwe\Secret\Value\KeyRing;
 final class KeyRingTest extends TestCase
 {
     /**
+     * Numeric identifiers remain strings even when PHP coerces their lookup-array keys to integers.
+     *
+     * @return  void
+     *
+     * @since   0.1.0
+     */
+    public function testNumericIdentifiersKeepTheirPublicStringType(): void
+    {
+        $retired = Fixture::key('12');
+        $ring = new KeyRing(Fixture::key('active'), [$retired, Fixture::key('2'), Fixture::key('001')]);
+
+        $this->assertSame(['active', '001', '12', '2'], $ring->keyIds(), 'String order and type are preserved.');
+        $this->assertSame($retired, $ring->keyFor('12'), 'Numeric key identifiers still resolve.');
+    }
+
+    /**
      * Prove resolution by identifier, active first, retired in ascending order.
      *
      * @return  void
