@@ -15,6 +15,14 @@ require dirname(__DIR__) . '/vendor/autoload.php';
 require dirname(__DIR__) . '/tests/Support/encryption-failure.php';
 
 $cipher = new SodiumEnvelopeCipher(new KeyMaterial('fixture-key', str_repeat('K', 32)));
+if (getenv('KUMWE_TEST_CIPHER_FAILURE') === 'pass-through') {
+    $envelope = $cipher->encrypt('native-round-trip', 'fixture-binding');
+    if ($cipher->decrypt($envelope, 'fixture-binding') !== 'native-round-trip') {
+        throw new \RuntimeException('Fixture did not preserve the native success path.');
+    }
+    echo "Native pass-through preserved.\n";
+    exit(0);
+}
 try {
     $cipher->encrypt('private-plaintext-detail', 'fixture-binding');
 } catch (EncryptionFailed $error) {

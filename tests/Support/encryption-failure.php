@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace Kumwe\Secret\Cipher;
 
-use Kumwe\Secret\Exception\EncryptionFailed;
-use Kumwe\Secret\Value\KeyMaterial;
 use Random\RandomException;
 use SodiumException;
 
@@ -37,7 +35,7 @@ function random_bytes(int $length): string
  * @param string $associatedData Synthetic binding.
  * @param string $nonce Synthetic nonce.
  * @param string $key Synthetic key.
- * @return never
+ * @return string Native ciphertext when no seal failure is selected.
  * @since 0.1.0
  */
 function sodium_crypto_aead_xchacha20poly1305_ietf_encrypt(
@@ -45,6 +43,9 @@ function sodium_crypto_aead_xchacha20poly1305_ietf_encrypt(
     string $associatedData,
     string $nonce,
     string $key,
-): never {
-    throw new SodiumException('private-platform-detail:' . $plaintext . $associatedData . $nonce . $key);
+): string {
+    if (getenv('KUMWE_TEST_CIPHER_FAILURE') === 'seal') {
+        throw new SodiumException('private-platform-detail:' . $plaintext . $associatedData . $nonce . $key);
+    }
+    return \sodium_crypto_aead_xchacha20poly1305_ietf_encrypt($plaintext, $associatedData, $nonce, $key);
 }

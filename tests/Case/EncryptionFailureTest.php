@@ -21,6 +21,7 @@ final class EncryptionFailureTest extends TestCase
     {
         foreach (
             [
+            'pass-through' => 'Native pass-through preserved.',
             'nonce' => 'The secret envelope nonce could not be generated.',
             'seal' => 'The secret envelope could not be sealed.',
             ] as $mode => $expected
