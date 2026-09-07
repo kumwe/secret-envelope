@@ -81,11 +81,11 @@ ownership:
   next_consumer: kumwe/app
   public_manifests:
     - path: resources/public-api/v1.json
-      sha256: "8bc0dcb93f2daa8e2c8ea56b0f3ec279b82aea1da5e5c7b1721244db69de9f6e"
+      sha256: "21bed5fdd15b8e205f3881df1e41bd13df5b969ea13307ef645112b6fd56dd65"
     - path: resources/capabilities/v1.json
-      sha256: "86e577ca9029aa8ec5da674828214ab7f57305692d96d0df5863a78a64d9836a"
+      sha256: "fb927883d0cfaef771eb02b83fe771b1344349ad2ae5737ec2cdc327f2e8f38e"
     - path: resources/service-map/v1.json
-      sha256: "a584e9f266d8156cfcb70c97f01b4f52888c19084cc49250d55ed561f9e1c665"
+      sha256: "742e7619b6fd94dbea2595794b9d81cf5e270030ad732b6affa96d3e11a8e2bf"
   intentionally_excluded:
     - "src/BusinessRecord/Domain/SecretKeyPurpose.php remains host policy; update canonical imports/delegation only."
     - "src/BusinessRecord/Application/SecretAssociatedData.php remains host policy; update canonical imports/delegation only."
@@ -370,9 +370,9 @@ documentation:
     - "examples/round-trip.php"
     - "examples/rotation.php"
     - "examples/container.php"
-  changelog_record: "CHANGELOG.md ## 0.1.0"
+  changelog_record: "CHANGELOG.md ## 0.1.1"
 release_expectations:
-  version_policy: "SemVer; CHANGELOG.md selects 0.1.0; exact consumer pin after independent release verification."
+  version_policy: "SemVer; CHANGELOG.md selects 0.1.1; exact consumer pin after independent release verification."
   expected_artifact_types:
     - "Composer source ZIP"
     - "GitHub source archive"
@@ -382,6 +382,7 @@ release_expectations:
     - "security audit"
     - "runtime-only archive consumer"
     - "Laminas consumer"
+    - "Protected main and an immutable, stable, non-draft GitHub release of the exact recorded version"
   required_registry_or_installer: Packagist
   required_external_attestation: true
 next_task:

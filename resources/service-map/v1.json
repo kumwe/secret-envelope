@@ -1,7 +1,7 @@
 {
   "schema": "kumwe-package-service-map/v1",
   "package": "kumwe/secret-envelope",
-  "release": "0.1.0",
+  "release": "0.1.1",
   "config_provider": "Kumwe\\Secret\\ConfigProvider",
   "provider_absence_reason": null,
   "factories": [

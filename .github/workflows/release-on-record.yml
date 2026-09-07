@@ -14,6 +14,9 @@ on:
   push:
     branches:
       - main
+  # Retry after repository settings are repaired, without an empty commit.
+  # Both jobs remain restricted to main and run the same complete gate.
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -26,7 +29,8 @@ concurrency:
 
 jobs:
   check:
-    name: PHP ${{ matrix.php }}
+    name: Release gate PHP ${{ matrix.php }}
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
@@ -63,6 +67,7 @@ jobs:
 
   release:
     name: Release the recorded version
+    if: github.ref == 'refs/heads/main'
     needs: check
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -77,8 +82,9 @@ jobs:
 
       - name: Require protected main before release mutations
         env:
+          RELEASE_REF: ${{ github.ref }}
           RELEASE_REF_PROTECTED: ${{ github.ref_protected }}
-        run: bash tools/check-release-integrity.sh protected "$RELEASE_REF_PROTECTED"
+        run: bash tools/check-release-integrity.sh source "$RELEASE_REF" "$RELEASE_REF_PROTECTED"
 
       # The newest release record is the FIRST second-level heading, so a
       # malformed record fails this run loudly instead of silently
