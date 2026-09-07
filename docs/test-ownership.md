@@ -29,7 +29,9 @@ its own integration assertions and does not execute package test files from vend
 ## Release integrity prerequisite
 
 The release workflow now refuses all tag/publication mutations unless main is protected and refuses an existing or
-newly published release unless its exact version is immutable, published, stable and non-draft. The 31
+newly published release unless its exact version is immutable, published, stable and non-draft. The 44
 package-owned release-integrity fixtures run in the complete check lane. A maintainer must protect main and enable
 immutable releases before recording the next release; these changes do not modify repository settings, existing
 tags or historical release integrity.
+Manual recovery is restricted to `refs/heads/main`; source-ref and protection refusal cases are included in
+those fixtures. See [Release protocol](releasing.md) for the repository settings and successor-release recovery.

@@ -1,7 +1,7 @@
 {
   "schema": "kumwe-package-capabilities/v1",
   "package": "kumwe/secret-envelope",
-  "release": "0.1.0",
+  "release": "0.1.1",
   "namespace": "Kumwe\\Secret\\",
   "responsibility": "Portable authenticated envelopes, explicit key identity and retained-key reads.",
   "non_responsibilities": [

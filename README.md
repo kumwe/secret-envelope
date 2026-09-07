@@ -6,7 +6,7 @@ Authenticated XChaCha20-Poly1305 envelopes with explicit key identity and rotati
 After the recorded release is published and independently verified, install an exact pre-1.0 version:
 
 ```bash
-composer require kumwe/secret-envelope:0.1.0
+composer require kumwe/secret-envelope:0.1.1
 ```
 
 The release record is an expectation until human merge, automation and external verification succeed.

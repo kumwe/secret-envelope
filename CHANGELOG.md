@@ -3,6 +3,18 @@
 The newest release heading is authoritative. A human merge to main triggers the complete release gate before
 automation may create its tag and GitHub release. No release is claimed by this record alone.
 
+## 0.1.1
+
+- Enforce package-owned behavior, boundary and conformance evidence for every exported type, including
+  encryption refusals and explicit container boundaries.
+- Preserve native encryption success paths in isolated fault fixtures so refusal tests exercise the
+  intended failure without replacing unrelated cryptographic behavior.
+- Prepare a successor release for the protected-main and immutable-publication requirements. Keep the
+  historical mutable v0.1.0 publication unchanged; release recovery requires the repository prerequisites
+  and a newly tested release record.
+- Keep the runtime API and stored envelope format unchanged; refresh the release metadata and handoff
+  manifest digests for the successor candidate.
+
 ## 0.1.0
 
 - Complete the interrupted extraction under the canonical `Kumwe\Secret` namespace with its architecture,

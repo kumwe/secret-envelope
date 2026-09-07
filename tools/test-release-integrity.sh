@@ -18,6 +18,16 @@ refuse() {
 }
 
 accept protected true
+accept source refs/heads/main true
+for ref in refs/heads/fix/release refs/tags/v0.1.1 refs/pull/1/merge main ''; do
+  refuse source "$ref" true
+done
+for state in false '' TRUE 1; do
+  refuse source refs/heads/main "$state"
+done
+refuse source
+refuse source refs/heads/main
+refuse source refs/heads/main true extra
 for state in false '' TRUE 1; do
   refuse protected "$state"
 done
