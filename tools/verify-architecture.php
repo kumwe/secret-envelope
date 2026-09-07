@@ -1,6 +1,42 @@
 <?php
 
+/**
+ * Verify package dependency and container boundaries.
+ */
+
 declare(strict_types=1);
+
+/**
+ * Restrict qualified dependencies to the package, native random error and explicit container boundary.
+ * @param string $source Source text, never executed.
+ * @param bool $containerBoundary Whether this file owns an explicit PSR container boundary.
+ * @return list<string> Boundary findings.
+ */
+$secretTokens = static function (string $source, bool $containerBoundary): array {
+    $findings = [];
+    foreach (token_get_all($source) as $token) {
+        if (!is_array($token) || !in_array($token[0], [T_STRING, T_NAME_QUALIFIED, T_NAME_FULLY_QUALIFIED], true)) {
+            continue;
+        }
+        $name = strtolower(ltrim($token[1], '\\'));
+        if ($name === 'psr' || str_starts_with($name, 'psr\\')) {
+            if (!$containerBoundary) {
+                $findings[] = 'Container contract outside the container boundary: ' . $name;
+            }
+            continue;
+        }
+        if (in_array($name, ['laminas', 'twig', 'monolog', 'ramsey', 'doctrine'], true)) {
+            $findings[] = 'Foreign namespace alias: ' . $name;
+        }
+        if (
+            str_contains($name, '\\') && $name !== 'kumwe\\secret'
+            && !str_starts_with($name, 'kumwe\\secret\\') && $name !== 'random\\randomexception'
+        ) {
+            $findings[] = 'Foreign qualified name: ' . $name;
+        }
+    }
+    return $findings;
+};
 
 $root = dirname(__DIR__);
 $errors = [];
@@ -13,6 +49,12 @@ foreach ($iterator as $file) {
     $count++;
     $path = substr($file->getPathname(), strlen($root) + 1);
     $code = (string) file_get_contents($file->getPathname());
+    $containerBoundary = in_array($path, [
+        'src/Container/KeyRingEnvelopeCipherFactory.php', 'src/Exception/ServiceBindingRefused.php',
+    ], true);
+    foreach ($secretTokens($code, $containerBoundary) as $finding) {
+        $errors[] = $path . ': ' . $finding;
+    }
     $tokens = token_get_all($code);
     $executable = '';
     foreach ($tokens as $token) {
@@ -30,7 +72,7 @@ foreach ($iterator as $file) {
         $errors[] = $path . ' is outside the canonical namespace.';
     }
     foreach (['Kumwe\\App\\', 'Doctrine\\', 'Illuminate\\', 'Symfony\\', 'Laminas\\'] as $forbidden) {
-        if (str_contains($executable, $forbidden)) {
+        if (stripos($executable, $forbidden) !== false) {
             $errors[] = $path . ' imports host/framework code.';
         }
     }
@@ -53,3 +95,20 @@ if ($count === 0 || $errors !== []) {
     exit(1);
 }
 echo "Architecture verified: {$count} portable source types.\n";
+
+if (in_array('--self-test', $argv ?? [], true)) {
+    $cases = ['new \\pSr\\Container\\ContainerInterface()', 'use PsR as Container;',
+        'new \\lAmInAs\\ServiceManager()', 'use LaMiNaS as Host;', 'new \\kUmWe\\aPp\\Service()'];
+    foreach ($cases as $case) {
+        if ($secretTokens('<?php ' . $case . ';', false) === []) {
+            throw new RuntimeException('Secret dependency mutation accepted: ' . $case);
+        }
+    }
+    if ($secretTokens('<?php use Psr\\Container\\ContainerInterface;', true) !== []) {
+        throw new RuntimeException('Explicit PSR container boundaries must remain allowed.');
+    }
+    if ($secretTokens('<?php use Random\\RandomException; random_bytes(24);', false) !== []) {
+        throw new RuntimeException('Native nonce acquisition must remain allowed.');
+    }
+    echo count($cases) . " secret token mutations and two native/container controls passed.\n";
+}
