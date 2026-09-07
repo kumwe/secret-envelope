@@ -5,6 +5,9 @@ automation may create its tag and GitHub release. No release is claimed by this 
 
 ## 0.1.1
 
+- Unify PR and post-rebase release gates, dynamic release identity, tested publication retries,
+  and administrator setup across the package family. Preserve immutable release and dependency evidence requirements.
+
 - Enforce package-owned behavior, boundary and conformance evidence for every exported type, including
   encryption refusals and explicit container boundaries.
 - Preserve native encryption success paths in isolated fault fixtures so refusal tests exercise the
