@@ -37,6 +37,10 @@ final class EncryptedEnvelopeTest extends TestCase
             'empty algorithm' => [['algorithm' => ''] + $well, 'algorithm is unsupported'],
             'ciphertext is not base64' => [['ciphertext' => 'not base64!!'] + $well, 'invalid base64 data'],
             'nonce is not base64' => [['nonce' => '****'] + $well, 'invalid base64 data'],
+            'encoded ciphertext is oversized' => [
+                ['ciphertext' => str_repeat('A', 1_398_105)] + $well,
+                'ciphertext exceeds its bound',
+            ],
             'nonce is truncated' => [['nonce' => base64_encode(str_repeat("\x11", 8))] + $well, 'nonce has an invalid size'],
             'nonce is oversized' => [['nonce' => base64_encode(str_repeat("\x11", 25))] + $well, 'nonce has an invalid size'],
             'ciphertext is empty' => [['ciphertext' => ''] + $well, 'shorter than its authentication tag'],

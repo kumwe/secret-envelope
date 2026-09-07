@@ -140,6 +140,12 @@ final readonly class EncryptedEnvelope
             }
             $members[$member] = $value;
         }
+        if (strlen($members['ciphertext']) > 4 * intdiv(self::MAXIMUM_CIPHERTEXT_BYTES + 2, 3)) {
+            throw new InvalidEnvelope('An encrypted envelope ciphertext exceeds its bound.');
+        }
+        if (strlen($members['nonce']) > 4 * intdiv(self::NONCE_BYTES + 2, 3)) {
+            throw new InvalidEnvelope('An encrypted envelope nonce has an invalid size.');
+        }
         $ciphertext = base64_decode($members['ciphertext'], true);
         $nonce = base64_decode($members['nonce'], true);
         if (!is_string($ciphertext) || !is_string($nonce)) {
