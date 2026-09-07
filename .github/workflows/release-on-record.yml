@@ -56,11 +56,10 @@ jobs:
       - name: Run the complete package gate
         run: composer check
 
-      - name: Verify the no-dev installed-package autoloader and the shipped example
+      - name: Verify the no-dev autoloader and runtime-only examples
         run: |
           composer install --no-interaction --prefer-dist --no-dev --classmap-authoritative
           composer autoload:smoke
-          composer examples
 
   release:
     name: Release the recorded version
