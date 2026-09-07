@@ -12,6 +12,8 @@ automation may create its tag and GitHub release. No release is claimed by this 
   serialization refusal, bounds and explicit provider construction.
 - Correct numeric retired key identifiers being exported as integers by PHP array-key coercion.
 - Bound encoded ciphertext and nonce sizes before allocating decoded storage input.
+- Make randomized disclosure assertions use a distinct plaintext sentinel so harmless one-byte matches in
+  error messages cannot cause intermittent false failures.
 - Add complete package checks and isolated Composer archive consumption, including no-dev authoritative
   autoloading and separately verified Laminas service resolution. Human merge and independent release
   verification remain required before App adoption (`KUMWE-MIG-2026-003`).

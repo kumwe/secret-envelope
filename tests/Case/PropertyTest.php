@@ -71,7 +71,8 @@ final class PropertyTest extends TestCase
         $cipher = new KeyRingEnvelopeCipher(new KeyRingKeyProvider($ring));
         $binding = 'property-binding';
         for ($round = 0; $round < 128; $round++) {
-            $plaintext = self::randomBytes(mt_rand(0, 256));
+            // A stable sentinel distinguishes disclosure from a chance one-byte match in an ordinary error.
+            $plaintext = Fixture::PLAINTEXT . self::randomBytes(mt_rand(0, 256));
             $envelope = $cipher->encrypt($plaintext, $binding);
             $storage = $envelope->toStorage();
             $member = ['ciphertext', 'nonce', 'key_id', 'algorithm', 'binding'][mt_rand(0, 4)];
@@ -92,9 +93,7 @@ final class PropertyTest extends TestCase
                         || $error instanceof KeyUnavailable,
                     "Round {$round} (seed {$seed}): damaged {$member} raised " . $error::class . '.',
                 );
-                if ($plaintext !== '') {
-                    $this->assertStringExcludes($plaintext, $error->getMessage(), 'No plaintext in the refusal.');
-                }
+                $this->assertStringExcludes(Fixture::PLAINTEXT, $error->getMessage(), 'No plaintext in the refusal.');
             }
         }
     }
