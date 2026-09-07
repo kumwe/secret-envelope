@@ -539,3 +539,10 @@ manifest/handoff, syntax, strict PHPStan, coding standards, behavioral/property/
 parser and a fresh archive dependency consumer before separately installing optional Laminas host integration.
 Observed final-head results and immutable tested identities are reported in the PR and external CI record.
 This handoff does not claim a release or its own final SHA/digest.
+
+## Enforced package test ownership
+
+Portable behavior, boundary and conformance evidence is maintained in `tests/ownership.json`,
+validated against the public API and actual test-runner discovery by `composer test:ownership`.
+See `docs/test-ownership.md` for the future-change rule and the precise host boundary.
+This follow-up changes package tests/tooling only; it does not authorize early App test deletion.
