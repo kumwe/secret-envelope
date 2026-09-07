@@ -1,0 +1,259 @@
+{
+  "schema": "kumwe-test-ownership/v1",
+  "package": "kumwe/secret-envelope",
+  "api_manifest": "resources/public-api/v1.json",
+  "suite": {
+    "inventory_command": [
+      "php",
+      "tests/run.php",
+      "--list-json"
+    ]
+  },
+  "exports": {
+    "Kumwe\\Secret\\Cipher\\KeyRingEnvelopeCipher": {
+      "behavior": [
+        "Kumwe\\Secret\\Tests\\Case\\KeyRingEnvelopeCipherTest::testEnvelopesSealedUnderARetiredKeyStillOpenAfterRotation",
+        "Kumwe\\Secret\\Tests\\Case\\KeyRingEnvelopeCipherTest::testARevokedOrForeignKeyFailsClosedWithoutDisclosingAnything"
+      ],
+      "boundary": [
+        "Kumwe\\Secret\\Tests\\Case\\KeyRingEnvelopeCipherTest::testPurposesKeyedApartRefuseEachOthersEnvelopes",
+        "Kumwe\\Secret\\Tests\\Case\\KeyRingEnvelopeCipherTest::testADowngradedAlgorithmIsRefusedBeforeAKeyIsResolved"
+      ]
+    },
+    "Kumwe\\Secret\\Cipher\\SodiumEnvelopeCipher": {
+      "behavior": [
+        "Kumwe\\Secret\\Tests\\Case\\SodiumEnvelopeCipherTest::testExactEnvelopeRoundTripsAndStorageIsNeverPlaintext",
+        "Kumwe\\Secret\\Tests\\Case\\SodiumEnvelopeCipherTest::testNoncesAreFreshAndRandomOnEveryCall"
+      ],
+      "boundary": [
+        "Kumwe\\Secret\\Tests\\Case\\SodiumEnvelopeCipherTest::testATruncatedCiphertextFailsClosedAtEveryLength",
+        "Kumwe\\Secret\\Tests\\Case\\SodiumEnvelopeCipherTest::testWrongKeysAreDistinguishedByIdentifierAndNeverByTrial"
+      ]
+    },
+    "Kumwe\\Secret\\ConfigProvider": {
+      "behavior": [
+        "Kumwe\\Secret\\Tests\\Case\\ConfigProviderTest::testTheConfigurationIsDeterministicAndMinimal",
+        "Kumwe\\Secret\\Tests\\Case\\ConfigProviderTest::testEveryNamedClassExistsAndIsFinal"
+      ],
+      "boundary": [
+        "Kumwe\\Secret\\Tests\\Case\\ConfigProviderTest::testEveryNamedClassExistsAndIsFinal"
+      ]
+    },
+    "Kumwe\\Secret\\Container\\KeyRingEnvelopeCipherFactory": {
+      "behavior": [
+        "Kumwe\\Secret\\Tests\\Case\\KeyRingEnvelopeCipherFactoryTest::testTheFactoryBuildsTheCipherOverTheBoundProvider"
+      ],
+      "boundary": [
+        "Kumwe\\Secret\\Tests\\Case\\KeyRingEnvelopeCipherFactoryTest::testTheFactoryBuildsTheCipherOverTheBoundProvider",
+        "Kumwe\\Secret\\Tests\\Case\\KeyRingEnvelopeCipherFactoryTest::testWrongOrMissingBindingsAreRefusedAtConstruction"
+      ]
+    },
+    "Kumwe\\Secret\\Contract\\EnvelopeCipher": {
+      "behavior": [
+        "Kumwe\\Secret\\Tests\\Case\\SodiumEnvelopeCipherTest::testExactEnvelopeRoundTripsAndStorageIsNeverPlaintext",
+        "Kumwe\\Secret\\Tests\\Case\\SodiumEnvelopeCipherTest::testNoncesAreFreshAndRandomOnEveryCall"
+      ],
+      "boundary": [
+        "Kumwe\\Secret\\Tests\\Case\\SodiumEnvelopeCipherTest::testATruncatedCiphertextFailsClosedAtEveryLength",
+        "Kumwe\\Secret\\Tests\\Case\\SodiumEnvelopeCipherTest::testWrongKeysAreDistinguishedByIdentifierAndNeverByTrial"
+      ],
+      "note": "The package owns the port contract; listed cases exercise its signature or consumer path. Concrete host adapter behavior remains with its implementing repository."
+    },
+    "Kumwe\\Secret\\Contract\\KeyProvider": {
+      "behavior": [
+        "Kumwe\\Secret\\Tests\\Case\\KeyRingEnvelopeCipherTest::testEnvelopesSealedUnderARetiredKeyStillOpenAfterRotation",
+        "Kumwe\\Secret\\Tests\\Case\\KeyRingEnvelopeCipherTest::testARevokedOrForeignKeyFailsClosedWithoutDisclosingAnything"
+      ],
+      "boundary": [
+        "Kumwe\\Secret\\Tests\\Case\\KeyRingEnvelopeCipherTest::testPurposesKeyedApartRefuseEachOthersEnvelopes",
+        "Kumwe\\Secret\\Tests\\Case\\KeyRingEnvelopeCipherTest::testADowngradedAlgorithmIsRefusedBeforeAKeyIsResolved"
+      ],
+      "note": "The package owns the port contract; listed cases exercise its signature or consumer path. Concrete host adapter behavior remains with its implementing repository."
+    },
+    "Kumwe\\Secret\\Exception\\AuthenticationFailed": {
+      "behavior": [
+        "Kumwe\\Secret\\Tests\\Case\\SodiumEnvelopeCipherTest::testEveryByteOfTheCiphertextAndNonceIsAuthenticated"
+      ],
+      "boundary": [
+        "Kumwe\\Secret\\Tests\\Case\\SodiumEnvelopeCipherTest::testEveryByteOfTheCiphertextAndNonceIsAuthenticated"
+      ]
+    },
+    "Kumwe\\Secret\\Exception\\EncryptionFailed": {
+      "behavior": [
+        "Kumwe\\Secret\\Tests\\Case\\EncryptionFailureTest::testPlatformFailuresAreTypedUnchainedAndRedacted"
+      ],
+      "boundary": [
+        "Kumwe\\Secret\\Tests\\Case\\EncryptionFailureTest::testPlatformFailuresAreTypedUnchainedAndRedacted"
+      ]
+    },
+    "Kumwe\\Secret\\Exception\\InvalidEnvelope": {
+      "behavior": [
+        "Kumwe\\Secret\\Tests\\Case\\EncryptedEnvelopeTest::testMalformedStoredEnvelopesAreRefusedBeforeAnyKeyIsUsed"
+      ],
+      "boundary": [
+        "Kumwe\\Secret\\Tests\\Case\\EncryptedEnvelopeTest::testMalformedStoredEnvelopesAreRefusedBeforeAnyKeyIsUsed"
+      ]
+    },
+    "Kumwe\\Secret\\Exception\\InvalidInput": {
+      "behavior": [
+        "Kumwe\\Secret\\Tests\\Case\\SodiumEnvelopeCipherTest::testInputBoundsAreExact"
+      ],
+      "boundary": [
+        "Kumwe\\Secret\\Tests\\Case\\SodiumEnvelopeCipherTest::testInputBoundsAreExact"
+      ]
+    },
+    "Kumwe\\Secret\\Exception\\InvalidKeyMaterial": {
+      "behavior": [
+        "Kumwe\\Secret\\Tests\\Case\\KeyMaterialTest::testUnusableKeysAreRefusedWithoutDisclosure"
+      ],
+      "boundary": [
+        "Kumwe\\Secret\\Tests\\Case\\KeyMaterialTest::testUnusableKeysAreRefusedWithoutDisclosure"
+      ]
+    },
+    "Kumwe\\Secret\\Exception\\KeyUnavailable": {
+      "behavior": [
+        "Kumwe\\Secret\\Tests\\Case\\KeyRingTest::testAMissingKeyIsUnavailableAndNamesNothingElse"
+      ],
+      "boundary": [
+        "Kumwe\\Secret\\Tests\\Case\\KeyRingTest::testAMissingKeyIsUnavailableAndNamesNothingElse"
+      ]
+    },
+    "Kumwe\\Secret\\Exception\\SecretDisclosureRefused": {
+      "behavior": [
+        "Kumwe\\Secret\\Tests\\Case\\KeyMaterialTest::testKeyMaterialIsRedactedFromEveryDisclosurePath"
+      ],
+      "boundary": [
+        "Kumwe\\Secret\\Tests\\Case\\KeyMaterialTest::testKeyMaterialIsRedactedFromEveryDisclosurePath"
+      ]
+    },
+    "Kumwe\\Secret\\Exception\\SecretException": {
+      "behavior": [
+        "Kumwe\\Secret\\Tests\\Case\\EncryptedEnvelopeTest::testMalformedStoredEnvelopesAreRefusedBeforeAnyKeyIsUsed"
+      ],
+      "boundary": [
+        "Kumwe\\Secret\\Tests\\Case\\EncryptedEnvelopeTest::testMalformedStoredEnvelopesAreRefusedBeforeAnyKeyIsUsed"
+      ],
+      "note": "The package owns the port contract; listed cases exercise its signature or consumer path. Concrete host adapter behavior remains with its implementing repository."
+    },
+    "Kumwe\\Secret\\Exception\\ServiceBindingRefused": {
+      "behavior": [
+        "Kumwe\\Secret\\Tests\\Case\\KeyRingEnvelopeCipherFactoryTest::testWrongOrMissingBindingsAreRefusedAtConstruction"
+      ],
+      "boundary": [
+        "Kumwe\\Secret\\Tests\\Case\\KeyRingEnvelopeCipherFactoryTest::testWrongOrMissingBindingsAreRefusedAtConstruction"
+      ]
+    },
+    "Kumwe\\Secret\\Provider\\KeyRingKeyProvider": {
+      "behavior": [
+        "Kumwe\\Secret\\Tests\\Case\\KeyRingKeyProviderTest::testTheProviderAnswersFromItsRing"
+      ],
+      "boundary": [
+        "Kumwe\\Secret\\Tests\\Case\\KeyRingKeyProviderTest::testTheProviderAnswersFromItsRing"
+      ]
+    },
+    "Kumwe\\Secret\\Value\\AssociatedData": {
+      "behavior": [
+        "Kumwe\\Secret\\Tests\\Case\\AssociatedDataTest::testTheBindingIsByteExact"
+      ],
+      "boundary": [
+        "Kumwe\\Secret\\Tests\\Case\\AssociatedDataTest::testAmbiguousCoordinatesAndMalformedMarkersAreRefused"
+      ]
+    },
+    "Kumwe\\Secret\\Value\\EncryptedEnvelope": {
+      "behavior": [
+        "Kumwe\\Secret\\Tests\\Case\\EncryptedEnvelopeTest::testStorageIsDeterministicAndRoundTrips"
+      ],
+      "boundary": [
+        "Kumwe\\Secret\\Tests\\Case\\EncryptedEnvelopeTest::testMalformedStoredEnvelopesAreRefusedBeforeAnyKeyIsUsed",
+        "Kumwe\\Secret\\Tests\\Case\\EncryptedEnvelopeTest::testOnlyTheSupportedConstructionAndBoundsAreAdmitted"
+      ]
+    },
+    "Kumwe\\Secret\\Value\\KeyIdentifier": {
+      "behavior": [
+        "Kumwe\\Secret\\Tests\\Case\\KeyIdentifierTest::testComparisonIsExact"
+      ],
+      "boundary": [
+        "Kumwe\\Secret\\Tests\\Case\\KeyIdentifierTest::testTheGrammarAdmitsVersionedNamesAndRefusesUnsafeOnes"
+      ]
+    },
+    "Kumwe\\Secret\\Value\\KeyMaterial": {
+      "behavior": [
+        "Kumwe\\Secret\\Tests\\Case\\KeyMaterialTest::testKeyMaterialIsRedactedFromEveryDisclosurePath"
+      ],
+      "boundary": [
+        "Kumwe\\Secret\\Tests\\Case\\KeyMaterialTest::testUnusableKeysAreRefusedWithoutDisclosure"
+      ]
+    },
+    "Kumwe\\Secret\\Value\\KeyPurpose": {
+      "behavior": [
+        "Kumwe\\Secret\\Tests\\Case\\KeyPurposeTest::testHostPurposesAreCarriedVerbatim"
+      ],
+      "boundary": [
+        "Kumwe\\Secret\\Tests\\Case\\KeyPurposeTest::testMalformedCoordinatesAreRefused"
+      ]
+    },
+    "Kumwe\\Secret\\Value\\KeyRing": {
+      "behavior": [
+        "Kumwe\\Secret\\Tests\\Case\\KeyRingTest::testNumericIdentifiersKeepTheirPublicStringType",
+        "Kumwe\\Secret\\Tests\\Case\\KeyRingTest::testKeysResolveByIdentifierOnly"
+      ],
+      "boundary": [
+        "Kumwe\\Secret\\Tests\\Case\\KeyRingTest::testAMissingKeyIsUnavailableAndNamesNothingElse",
+        "Kumwe\\Secret\\Tests\\Case\\KeyRingTest::testAmbiguousOrOverfullRingsAreRefused"
+      ]
+    }
+  },
+  "conformance": {
+    "status": "owned",
+    "rationale": "Versioned synthetic authenticated-envelope vectors are replayed here; key custody and authorization remain with the host.",
+    "tests": [
+      "Kumwe\\Secret\\Tests\\Case\\CorpusTest::testEveryRecordedVectorStillOpens",
+      "Kumwe\\Secret\\Tests\\Case\\CorpusTest::testEveryRecordedRefusalIsStillRefused",
+      "Kumwe\\Secret\\Tests\\Case\\EncryptedEnvelopeTest::testStorageIsDeterministicAndRoundTrips",
+      "Kumwe\\Secret\\Tests\\Case\\KeyIdentifierTest::testTheGrammarAdmitsVersionedNamesAndRefusesUnsafeOnes",
+      "Kumwe\\Secret\\Tests\\Case\\PropertyTest::testRandomValuesRoundTripExactly",
+      "Kumwe\\Secret\\Tests\\Case\\PropertyTest::testRandomIdentifiersAreClassifiedByTheGrammarAlone",
+      "Kumwe\\Secret\\Tests\\Case\\SodiumEnvelopeCipherTest::testExactEnvelopeRoundTripsAndStorageIsNeverPlaintext"
+    ],
+    "corpora": [
+      "resources/corpus/v1/envelopes.json"
+    ]
+  },
+  "architecture": [
+    "tools/verify-architecture.php"
+  ],
+  "host": {
+    "repository": "kumwe/app",
+    "baseline": "960ce8ec00cf724a7cae03e5ba09c4852c9ab54e",
+    "transfers": [
+      {
+        "source_test": "tests/Unit/BusinessRecord/Domain/EncryptedEnvelopeTest.php",
+        "action": "remove-on-adoption",
+        "package_tests": [
+          "Kumwe\\Secret\\Tests\\Case\\EncryptedEnvelopeTest::testMalformedStoredEnvelopesAreRefusedBeforeAnyKeyIsUsed",
+          "Kumwe\\Secret\\Tests\\Case\\EncryptedEnvelopeTest::testStorageIsDeterministicAndRoundTrips",
+          "Kumwe\\Secret\\Tests\\Case\\EncryptedEnvelopeTest::testOnlyTheSupportedConstructionAndBoundsAreAdmitted"
+        ],
+        "retained": "Keep record persistence, restore and host binding checks."
+      },
+      {
+        "source_test": "tests/Unit/BusinessRecord/Infrastructure/SodiumSecretCipherTest.php",
+        "action": "remove-on-adoption",
+        "package_tests": [
+          "Kumwe\\Secret\\Tests\\Case\\SodiumEnvelopeCipherTest::testExactEnvelopeRoundTripsAndStorageIsNeverPlaintext",
+          "Kumwe\\Secret\\Tests\\Case\\SodiumEnvelopeCipherTest::testNoncesAreFreshAndRandomOnEveryCall",
+          "Kumwe\\Secret\\Tests\\Case\\SodiumEnvelopeCipherTest::testAssociatedDataPreventsCrossPlaceReplay",
+          "Kumwe\\Secret\\Tests\\Case\\SodiumEnvelopeCipherTest::testEveryByteOfTheCiphertextAndNonceIsAuthenticated",
+          "Kumwe\\Secret\\Tests\\Case\\SodiumEnvelopeCipherTest::testATruncatedCiphertextFailsClosedAtEveryLength",
+          "Kumwe\\Secret\\Tests\\Case\\SodiumEnvelopeCipherTest::testWrongKeysAreDistinguishedByIdentifierAndNeverByTrial",
+          "Kumwe\\Secret\\Tests\\Case\\SodiumEnvelopeCipherTest::testInputBoundsAreExact",
+          "Kumwe\\Secret\\Tests\\Case\\SodiumEnvelopeCipherTest::testNoFailureCarriesPlaintextOrKeyMaterial"
+        ],
+        "retained": "Keep key custody, rotation and authorized record use."
+      }
+    ],
+    "retained_responsibilities": [
+      "Host key custody, HKDF labels, rotation/restore, authorized record access, cross-record binding and audit."
+    ]
+  }
+}

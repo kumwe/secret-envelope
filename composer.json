@@ -58,6 +58,7 @@
       "@autoload:smoke",
       "@cs",
       "@analyse",
+      "@test:ownership",
       "@test",
       "@examples",
       "@consumer",
@@ -67,7 +68,8 @@
     "api:docs": "php tools/verify-public-docs.php",
     "api:docs:record": "php tools/verify-public-docs.php --write",
     "security:audit": "composer audit --abandoned=fail",
-    "release:parser": "bash tools/test-release-record.sh"
+    "release:parser": "bash tools/test-release-record.sh",
+    "test:ownership": "php tools/verify-test-ownership.php --self-test"
   },
   "config": {
     "sort-packages": true
