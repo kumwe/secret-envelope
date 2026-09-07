@@ -34,7 +34,7 @@
     "composer:validate": "composer validate --strict",
     "lint": "php tools/lint.php",
     "docs": "php tools/check-docblocks.php",
-    "architecture": "php tools/verify-architecture.php",
+    "architecture": "php tools/verify-architecture.php --self-test",
     "api": "php tools/verify-public-api.php",
     "api:record": "php tools/verify-public-api.php --write",
     "manifests": "php tools/verify-manifests.php",
@@ -51,6 +51,7 @@
       "@lint",
       "@docs",
       "@architecture",
+      "@boundary:tokens",
       "@api",
       "@api:docs",
       "@manifests",
@@ -63,13 +64,16 @@
       "@examples",
       "@consumer",
       "@security:audit",
-      "@release:parser"
+      "@release:parser",
+      "@release:integrity"
     ],
     "api:docs": "php tools/verify-public-docs.php",
     "api:docs:record": "php tools/verify-public-docs.php --write",
     "security:audit": "composer audit --abandoned=fail",
     "release:parser": "bash tools/test-release-record.sh",
-    "test:ownership": "php tools/verify-test-ownership.php --self-test"
+    "test:ownership": "php tools/verify-test-ownership.php --self-test",
+    "release:integrity": "bash tools/test-release-integrity.sh",
+    "boundary:tokens": "php tools/verify-boundary-tokens.php --self-test"
   },
   "config": {
     "sort-packages": true

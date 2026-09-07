@@ -250,6 +250,17 @@ try {
         throw new RuntimeException('Test discovery failed.');
     }
     $inventory = TestOwnership::object(json_decode(implode("\n", $lines), false, 64, JSON_THROW_ON_ERROR));
+    if (array_key_exists('namespace_prefix', $suite)) {
+        $prefix = TestOwnership::text($suite['namespace_prefix']);
+        $short = [];
+        foreach ($inventory as $name => $file) {
+            if (!str_starts_with($name, $prefix)) {
+                throw new RuntimeException('Test namespace prefix disagrees with actual runner discovery.');
+            }
+            $short[substr($name, strlen($prefix))] = $file;
+        }
+        $inventory = $short;
+    }
     TestOwnership::validate($record, $symbols, $inventory, $package);
     if (in_array('--self-test', $argv ?? [], true)) {
         $first = array_key_first($symbols);

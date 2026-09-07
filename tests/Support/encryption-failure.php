@@ -48,4 +48,3 @@ function sodium_crypto_aead_xchacha20poly1305_ietf_encrypt(
 ): never {
     throw new SodiumException('private-platform-detail:' . $plaintext . $associatedData . $nonce . $key);
 }
-

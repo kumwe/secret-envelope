@@ -75,6 +75,11 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
+      - name: Require protected main before release mutations
+        env:
+          RELEASE_REF_PROTECTED: ${{ github.ref_protected }}
+        run: bash tools/check-release-integrity.sh protected "$RELEASE_REF_PROTECTED"
+
       # The newest release record is the FIRST second-level heading, so a
       # malformed record fails this run loudly instead of silently
       # releasing nothing or re-reading an older heading.
@@ -106,6 +111,7 @@ jobs:
           probe_status=0
           probe="$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/v$VERSION" 2>&1)" || probe_status=$?
           if [ "$probe_status" -eq 0 ]; then
+            bash tools/check-release-integrity.sh published "$VERSION" <<< "$probe"
             echo "exists=true" >> "$GITHUB_OUTPUT"
           elif grep -q 'HTTP 404' <<<"$probe"; then
             echo "exists=false" >> "$GITHUB_OUTPUT"
@@ -176,3 +182,14 @@ jobs:
             --verify-tag \
             --title "v$VERSION" \
             --notes "Authenticated encrypted-envelope and key-ring contracts. Changelog: CHANGELOG.md section $VERSION."
+
+      - name: Verify the published release is immutable
+        if: steps.record.outputs.version != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.record.outputs.version }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api "repos/$GITHUB_REPOSITORY/releases/tags/v$VERSION" \
+            | bash tools/check-release-integrity.sh published "$VERSION"
