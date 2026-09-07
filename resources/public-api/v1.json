@@ -1,0 +1,1005 @@
+{
+    "schema": "kumwe-package-public-api/v1",
+    "package": "kumwe/secret-envelope",
+    "release": "0.1.0",
+    "namespace": "Kumwe\\Secret\\",
+    "symbols": {
+        "Kumwe\\Secret\\Cipher\\KeyRingEnvelopeCipher": {
+            "kind": "class",
+            "stability": "stable",
+            "file": "src/Cipher/KeyRingEnvelopeCipher.php",
+            "abstract": false,
+            "final": true,
+            "readonly": true,
+            "parent": null,
+            "interfaces": [
+                "Kumwe\\Secret\\Contract\\EnvelopeCipher"
+            ],
+            "constants": {},
+            "properties": {},
+            "methods": {
+                "__construct": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [
+                        {
+                            "name": "keys",
+                            "type": "Kumwe\\Secret\\Contract\\KeyProvider",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        }
+                    ],
+                    "return": null
+                },
+                "decrypt": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [
+                        {
+                            "name": "envelope",
+                            "type": "Kumwe\\Secret\\Value\\EncryptedEnvelope",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        },
+                        {
+                            "name": "associatedData",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        }
+                    ],
+                    "return": "string"
+                },
+                "encrypt": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [
+                        {
+                            "name": "plaintext",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        },
+                        {
+                            "name": "associatedData",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        }
+                    ],
+                    "return": "Kumwe\\Secret\\Value\\EncryptedEnvelope"
+                }
+            },
+            "deprecated": null
+        },
+        "Kumwe\\Secret\\Cipher\\SodiumEnvelopeCipher": {
+            "kind": "class",
+            "stability": "stable",
+            "file": "src/Cipher/SodiumEnvelopeCipher.php",
+            "abstract": false,
+            "final": true,
+            "readonly": true,
+            "parent": null,
+            "interfaces": [
+                "Kumwe\\Secret\\Contract\\EnvelopeCipher"
+            ],
+            "constants": {
+                "MAXIMUM_ASSOCIATED_DATA_BYTES": {
+                    "type": "int"
+                },
+                "MAXIMUM_PLAINTEXT_BYTES": {
+                    "type": "int"
+                }
+            },
+            "properties": {},
+            "methods": {
+                "__construct": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [
+                        {
+                            "name": "key",
+                            "type": "Kumwe\\Secret\\Value\\KeyMaterial",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        }
+                    ],
+                    "return": null
+                },
+                "decrypt": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [
+                        {
+                            "name": "envelope",
+                            "type": "Kumwe\\Secret\\Value\\EncryptedEnvelope",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        },
+                        {
+                            "name": "associatedData",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        }
+                    ],
+                    "return": "string"
+                },
+                "encrypt": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [
+                        {
+                            "name": "plaintext",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        },
+                        {
+                            "name": "associatedData",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        }
+                    ],
+                    "return": "Kumwe\\Secret\\Value\\EncryptedEnvelope"
+                },
+                "keyId": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [],
+                    "return": "string"
+                }
+            },
+            "deprecated": null
+        },
+        "Kumwe\\Secret\\ConfigProvider": {
+            "kind": "class",
+            "stability": "stable",
+            "file": "src/ConfigProvider.php",
+            "abstract": false,
+            "final": true,
+            "readonly": false,
+            "parent": null,
+            "interfaces": [],
+            "constants": {},
+            "properties": {},
+            "methods": {
+                "__invoke": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [],
+                    "return": "array"
+                },
+                "getDependencies": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [],
+                    "return": "array"
+                }
+            },
+            "deprecated": null
+        },
+        "Kumwe\\Secret\\Container\\KeyRingEnvelopeCipherFactory": {
+            "kind": "class",
+            "stability": "stable",
+            "file": "src/Container/KeyRingEnvelopeCipherFactory.php",
+            "abstract": false,
+            "final": true,
+            "readonly": true,
+            "parent": null,
+            "interfaces": [],
+            "constants": {},
+            "properties": {},
+            "methods": {
+                "__invoke": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [
+                        {
+                            "name": "container",
+                            "type": "Psr\\Container\\ContainerInterface",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        }
+                    ],
+                    "return": "Kumwe\\Secret\\Cipher\\KeyRingEnvelopeCipher"
+                }
+            },
+            "deprecated": null
+        },
+        "Kumwe\\Secret\\Contract\\EnvelopeCipher": {
+            "kind": "interface",
+            "stability": "stable",
+            "file": "src/Contract/EnvelopeCipher.php",
+            "abstract": false,
+            "final": false,
+            "readonly": false,
+            "parent": null,
+            "interfaces": [],
+            "constants": {},
+            "properties": {},
+            "methods": {
+                "decrypt": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [
+                        {
+                            "name": "envelope",
+                            "type": "Kumwe\\Secret\\Value\\EncryptedEnvelope",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        },
+                        {
+                            "name": "associatedData",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        }
+                    ],
+                    "return": "string"
+                },
+                "encrypt": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [
+                        {
+                            "name": "plaintext",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        },
+                        {
+                            "name": "associatedData",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        }
+                    ],
+                    "return": "Kumwe\\Secret\\Value\\EncryptedEnvelope"
+                }
+            },
+            "deprecated": null
+        },
+        "Kumwe\\Secret\\Contract\\KeyProvider": {
+            "kind": "interface",
+            "stability": "stable",
+            "file": "src/Contract/KeyProvider.php",
+            "abstract": false,
+            "final": false,
+            "readonly": false,
+            "parent": null,
+            "interfaces": [],
+            "constants": {},
+            "properties": {},
+            "methods": {
+                "activeKey": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [],
+                    "return": "Kumwe\\Secret\\Value\\KeyMaterial"
+                },
+                "activeKeyId": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [],
+                    "return": "string"
+                },
+                "keyFor": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [
+                        {
+                            "name": "keyId",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        }
+                    ],
+                    "return": "Kumwe\\Secret\\Value\\KeyMaterial"
+                },
+                "knownKeyIds": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [],
+                    "return": "array"
+                }
+            },
+            "deprecated": null
+        },
+        "Kumwe\\Secret\\Exception\\AuthenticationFailed": {
+            "kind": "class",
+            "stability": "stable",
+            "file": "src/Exception/AuthenticationFailed.php",
+            "abstract": false,
+            "final": true,
+            "readonly": false,
+            "parent": "RuntimeException",
+            "interfaces": [
+                "Kumwe\\Secret\\Exception\\SecretException",
+                "Stringable",
+                "Throwable"
+            ],
+            "constants": {},
+            "properties": {},
+            "methods": {},
+            "deprecated": null
+        },
+        "Kumwe\\Secret\\Exception\\EncryptionFailed": {
+            "kind": "class",
+            "stability": "stable",
+            "file": "src/Exception/EncryptionFailed.php",
+            "abstract": false,
+            "final": true,
+            "readonly": false,
+            "parent": "RuntimeException",
+            "interfaces": [
+                "Kumwe\\Secret\\Exception\\SecretException",
+                "Stringable",
+                "Throwable"
+            ],
+            "constants": {},
+            "properties": {},
+            "methods": {},
+            "deprecated": null
+        },
+        "Kumwe\\Secret\\Exception\\InvalidEnvelope": {
+            "kind": "class",
+            "stability": "stable",
+            "file": "src/Exception/InvalidEnvelope.php",
+            "abstract": false,
+            "final": true,
+            "readonly": false,
+            "parent": "InvalidArgumentException",
+            "interfaces": [
+                "Kumwe\\Secret\\Exception\\SecretException",
+                "Stringable",
+                "Throwable"
+            ],
+            "constants": {},
+            "properties": {},
+            "methods": {},
+            "deprecated": null
+        },
+        "Kumwe\\Secret\\Exception\\InvalidInput": {
+            "kind": "class",
+            "stability": "stable",
+            "file": "src/Exception/InvalidInput.php",
+            "abstract": false,
+            "final": true,
+            "readonly": false,
+            "parent": "InvalidArgumentException",
+            "interfaces": [
+                "Kumwe\\Secret\\Exception\\SecretException",
+                "Stringable",
+                "Throwable"
+            ],
+            "constants": {},
+            "properties": {},
+            "methods": {},
+            "deprecated": null
+        },
+        "Kumwe\\Secret\\Exception\\InvalidKeyMaterial": {
+            "kind": "class",
+            "stability": "stable",
+            "file": "src/Exception/InvalidKeyMaterial.php",
+            "abstract": false,
+            "final": true,
+            "readonly": false,
+            "parent": "InvalidArgumentException",
+            "interfaces": [
+                "Kumwe\\Secret\\Exception\\SecretException",
+                "Stringable",
+                "Throwable"
+            ],
+            "constants": {},
+            "properties": {},
+            "methods": {},
+            "deprecated": null
+        },
+        "Kumwe\\Secret\\Exception\\KeyUnavailable": {
+            "kind": "class",
+            "stability": "stable",
+            "file": "src/Exception/KeyUnavailable.php",
+            "abstract": false,
+            "final": true,
+            "readonly": false,
+            "parent": "RuntimeException",
+            "interfaces": [
+                "Kumwe\\Secret\\Exception\\SecretException",
+                "Stringable",
+                "Throwable"
+            ],
+            "constants": {},
+            "properties": {},
+            "methods": {
+                "__construct": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [
+                        {
+                            "name": "keyId",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        }
+                    ],
+                    "return": null
+                },
+                "keyId": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [],
+                    "return": "string"
+                }
+            },
+            "deprecated": null
+        },
+        "Kumwe\\Secret\\Exception\\SecretDisclosureRefused": {
+            "kind": "class",
+            "stability": "stable",
+            "file": "src/Exception/SecretDisclosureRefused.php",
+            "abstract": false,
+            "final": true,
+            "readonly": false,
+            "parent": "LogicException",
+            "interfaces": [
+                "Kumwe\\Secret\\Exception\\SecretException",
+                "Stringable",
+                "Throwable"
+            ],
+            "constants": {},
+            "properties": {},
+            "methods": {},
+            "deprecated": null
+        },
+        "Kumwe\\Secret\\Exception\\SecretException": {
+            "kind": "interface",
+            "stability": "stable",
+            "file": "src/Exception/SecretException.php",
+            "abstract": false,
+            "final": false,
+            "readonly": false,
+            "parent": null,
+            "interfaces": [
+                "Stringable",
+                "Throwable"
+            ],
+            "constants": {},
+            "properties": {},
+            "methods": {},
+            "deprecated": null
+        },
+        "Kumwe\\Secret\\Exception\\ServiceBindingRefused": {
+            "kind": "class",
+            "stability": "stable",
+            "file": "src/Exception/ServiceBindingRefused.php",
+            "abstract": false,
+            "final": true,
+            "readonly": false,
+            "parent": "RuntimeException",
+            "interfaces": [
+                "Kumwe\\Secret\\Exception\\SecretException",
+                "Psr\\Container\\ContainerExceptionInterface",
+                "Stringable",
+                "Throwable"
+            ],
+            "constants": {},
+            "properties": {},
+            "methods": {
+                "forService": {
+                    "visibility": "public",
+                    "static": true,
+                    "parameters": [
+                        {
+                            "name": "serviceId",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        },
+                        {
+                            "name": "expected",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        },
+                        {
+                            "name": "actual",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        }
+                    ],
+                    "return": "Kumwe\\Secret\\Exception\\ServiceBindingRefused"
+                }
+            },
+            "deprecated": null
+        },
+        "Kumwe\\Secret\\Provider\\KeyRingKeyProvider": {
+            "kind": "class",
+            "stability": "stable",
+            "file": "src/Provider/KeyRingKeyProvider.php",
+            "abstract": false,
+            "final": true,
+            "readonly": true,
+            "parent": null,
+            "interfaces": [
+                "Kumwe\\Secret\\Contract\\KeyProvider"
+            ],
+            "constants": {},
+            "properties": {},
+            "methods": {
+                "__construct": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [
+                        {
+                            "name": "ring",
+                            "type": "Kumwe\\Secret\\Value\\KeyRing",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        }
+                    ],
+                    "return": null
+                },
+                "activeKey": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [],
+                    "return": "Kumwe\\Secret\\Value\\KeyMaterial"
+                },
+                "activeKeyId": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [],
+                    "return": "string"
+                },
+                "keyFor": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [
+                        {
+                            "name": "keyId",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        }
+                    ],
+                    "return": "Kumwe\\Secret\\Value\\KeyMaterial"
+                },
+                "knownKeyIds": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [],
+                    "return": "array"
+                }
+            },
+            "deprecated": null
+        },
+        "Kumwe\\Secret\\Value\\AssociatedData": {
+            "kind": "class",
+            "stability": "stable",
+            "file": "src/Value/AssociatedData.php",
+            "abstract": false,
+            "final": true,
+            "readonly": false,
+            "parent": null,
+            "interfaces": [],
+            "constants": {
+                "DOMAIN_PATTERN": {
+                    "type": "string"
+                },
+                "SEPARATOR": {
+                    "type": "string"
+                }
+            },
+            "properties": {},
+            "methods": {
+                "for": {
+                    "visibility": "public",
+                    "static": true,
+                    "parameters": [
+                        {
+                            "name": "domain",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        },
+                        {
+                            "name": "coordinates",
+                            "type": "string",
+                            "optional": true,
+                            "variadic": true,
+                            "by_reference": false
+                        }
+                    ],
+                    "return": "string"
+                }
+            },
+            "deprecated": null
+        },
+        "Kumwe\\Secret\\Value\\EncryptedEnvelope": {
+            "kind": "class",
+            "stability": "stable",
+            "file": "src/Value/EncryptedEnvelope.php",
+            "abstract": false,
+            "final": true,
+            "readonly": true,
+            "parent": null,
+            "interfaces": [],
+            "constants": {
+                "ALGORITHM": {
+                    "type": "string"
+                },
+                "MAXIMUM_CIPHERTEXT_BYTES": {
+                    "type": "int"
+                },
+                "MINIMUM_CIPHERTEXT_BYTES": {
+                    "type": "int"
+                },
+                "NONCE_BYTES": {
+                    "type": "int"
+                }
+            },
+            "properties": {
+                "algorithm": {
+                    "type": "string",
+                    "static": false,
+                    "readonly": true
+                },
+                "ciphertext": {
+                    "type": "string",
+                    "static": false,
+                    "readonly": true
+                },
+                "keyId": {
+                    "type": "string",
+                    "static": false,
+                    "readonly": true
+                },
+                "nonce": {
+                    "type": "string",
+                    "static": false,
+                    "readonly": true
+                }
+            },
+            "methods": {
+                "__construct": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [
+                        {
+                            "name": "ciphertext",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        },
+                        {
+                            "name": "nonce",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        },
+                        {
+                            "name": "keyId",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        },
+                        {
+                            "name": "algorithm",
+                            "type": "string",
+                            "optional": true,
+                            "variadic": false,
+                            "by_reference": false
+                        }
+                    ],
+                    "return": null
+                },
+                "fromStorage": {
+                    "visibility": "public",
+                    "static": true,
+                    "parameters": [
+                        {
+                            "name": "storage",
+                            "type": "array",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        }
+                    ],
+                    "return": "Kumwe\\Secret\\Value\\EncryptedEnvelope"
+                },
+                "toStorage": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [],
+                    "return": "array"
+                }
+            },
+            "deprecated": null
+        },
+        "Kumwe\\Secret\\Value\\KeyIdentifier": {
+            "kind": "class",
+            "stability": "stable",
+            "file": "src/Value/KeyIdentifier.php",
+            "abstract": false,
+            "final": true,
+            "readonly": false,
+            "parent": null,
+            "interfaces": [],
+            "constants": {
+                "MAXIMUM_LENGTH": {
+                    "type": "int"
+                },
+                "PATTERN": {
+                    "type": "string"
+                }
+            },
+            "properties": {},
+            "methods": {
+                "equals": {
+                    "visibility": "public",
+                    "static": true,
+                    "parameters": [
+                        {
+                            "name": "known",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        },
+                        {
+                            "name": "presented",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        }
+                    ],
+                    "return": "bool"
+                },
+                "isValid": {
+                    "visibility": "public",
+                    "static": true,
+                    "parameters": [
+                        {
+                            "name": "keyId",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        }
+                    ],
+                    "return": "bool"
+                }
+            },
+            "deprecated": null
+        },
+        "Kumwe\\Secret\\Value\\KeyMaterial": {
+            "kind": "class",
+            "stability": "stable",
+            "file": "src/Value/KeyMaterial.php",
+            "abstract": false,
+            "final": true,
+            "readonly": true,
+            "parent": null,
+            "interfaces": [],
+            "constants": {
+                "KEY_BYTES": {
+                    "type": "int"
+                }
+            },
+            "properties": {
+                "keyId": {
+                    "type": "string",
+                    "static": false,
+                    "readonly": true
+                }
+            },
+            "methods": {
+                "__construct": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [
+                        {
+                            "name": "keyId",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        },
+                        {
+                            "name": "material",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        }
+                    ],
+                    "return": null
+                },
+                "__debugInfo": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [],
+                    "return": "array"
+                },
+                "__serialize": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [],
+                    "return": "array"
+                },
+                "material": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [],
+                    "return": "string"
+                }
+            },
+            "deprecated": null
+        },
+        "Kumwe\\Secret\\Value\\KeyPurpose": {
+            "kind": "class",
+            "stability": "stable",
+            "file": "src/Value/KeyPurpose.php",
+            "abstract": false,
+            "final": true,
+            "readonly": true,
+            "parent": null,
+            "interfaces": [],
+            "constants": {
+                "LABEL_PATTERN": {
+                    "type": "string"
+                }
+            },
+            "properties": {
+                "defaultKeyId": {
+                    "type": "string",
+                    "static": false,
+                    "readonly": true
+                },
+                "derivationLabel": {
+                    "type": "string",
+                    "static": false,
+                    "readonly": true
+                },
+                "name": {
+                    "type": "string",
+                    "static": false,
+                    "readonly": true
+                }
+            },
+            "methods": {
+                "__construct": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        },
+                        {
+                            "name": "derivationLabel",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        },
+                        {
+                            "name": "defaultKeyId",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        }
+                    ],
+                    "return": null
+                }
+            },
+            "deprecated": null
+        },
+        "Kumwe\\Secret\\Value\\KeyRing": {
+            "kind": "class",
+            "stability": "stable",
+            "file": "src/Value/KeyRing.php",
+            "abstract": false,
+            "final": true,
+            "readonly": true,
+            "parent": null,
+            "interfaces": [],
+            "constants": {
+                "MAXIMUM_RETIRED_KEYS": {
+                    "type": "int"
+                }
+            },
+            "properties": {
+                "active": {
+                    "type": "Kumwe\\Secret\\Value\\KeyMaterial",
+                    "static": false,
+                    "readonly": true
+                }
+            },
+            "methods": {
+                "__construct": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [
+                        {
+                            "name": "active",
+                            "type": "Kumwe\\Secret\\Value\\KeyMaterial",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        },
+                        {
+                            "name": "previous",
+                            "type": "array",
+                            "optional": true,
+                            "variadic": false,
+                            "by_reference": false
+                        }
+                    ],
+                    "return": null
+                },
+                "keyFor": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [
+                        {
+                            "name": "keyId",
+                            "type": "string",
+                            "optional": false,
+                            "variadic": false,
+                            "by_reference": false
+                        }
+                    ],
+                    "return": "Kumwe\\Secret\\Value\\KeyMaterial"
+                },
+                "keyIds": {
+                    "visibility": "public",
+                    "static": false,
+                    "parameters": [],
+                    "return": "array"
+                }
+            },
+            "deprecated": null
+        }
+    },
+    "extension_points": [
+        "Kumwe\\Secret\\Contract\\EnvelopeCipher",
+        "Kumwe\\Secret\\Contract\\KeyProvider",
+        "Kumwe\\Secret\\Exception\\SecretException"
+    ],
+    "digest_of": "src"
+}

@@ -37,7 +37,10 @@ final class ServiceResolutionTest extends TestCase
      */
     public function testTheServiceManagerResolvesTheDocumentedServices(): void
     {
-        $this->assertTrue(class_exists(ServiceManager::class), 'laminas/laminas-servicemanager is installed (composer install).');
+        $this->assertTrue(
+            class_exists(ServiceManager::class),
+            'laminas/laminas-servicemanager is installed (composer install).',
+        );
         $container = self::container(new KeyRingKeyProvider(new KeyRing(Fixture::key('record-v1'))));
 
         $this->assertTrue($container->has(KeyRingEnvelopeCipher::class), 'The concrete service is known.');
@@ -45,7 +48,11 @@ final class ServiceResolutionTest extends TestCase
         $cipher = $container->get(EnvelopeCipher::class);
         $this->assertInstanceOf(KeyRingEnvelopeCipher::class, $cipher, 'The alias resolves to the ring cipher.');
         $this->assertSame($cipher, $container->get(EnvelopeCipher::class), 'The alias is shared.');
-        $this->assertSame($cipher, $container->get(KeyRingEnvelopeCipher::class), 'The concrete id shares the instance.');
+        $this->assertSame(
+            $cipher,
+            $container->get(KeyRingEnvelopeCipher::class),
+            'The concrete id shares the instance.',
+        );
         $this->assertNotSame($cipher, $container->build(KeyRingEnvelopeCipher::class), 'build() makes a fresh one.');
         if ($cipher instanceof EnvelopeCipher) {
             $envelope = $cipher->encrypt('resolved', 'binding');
@@ -63,7 +70,10 @@ final class ServiceResolutionTest extends TestCase
      */
     public function testMissingOrWrongHostBindingsFailAtResolution(): void
     {
-        $this->assertTrue(class_exists(ServiceManager::class), 'laminas/laminas-servicemanager is installed (composer install).');
+        $this->assertTrue(
+            class_exists(ServiceManager::class),
+            'laminas/laminas-servicemanager is installed (composer install).',
+        );
         $unbound = new ServiceManager((new ConfigProvider())->getDependencies());
         $this->assertThrows(
             static fn (): mixed => $unbound->get(EnvelopeCipher::class),
@@ -78,7 +88,10 @@ final class ServiceResolutionTest extends TestCase
             ContainerExceptionInterface::class,
             'A wrong binding fails as a container exception.',
         );
-        $this->assertTrue(self::chainContains($error, ServiceBindingRefused::class), 'The typed refusal is in the chain.');
+        $this->assertTrue(
+            self::chainContains($error, ServiceBindingRefused::class),
+            'The typed refusal is in the chain.',
+        );
     }
 
     /**

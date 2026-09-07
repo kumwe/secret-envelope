@@ -34,7 +34,11 @@ final class CorpusTest extends TestCase
     {
         $corpus = self::corpus();
         $cipher = self::cipher($corpus);
-        $this->assertSame('kumwe-secret-envelope-corpus/v1', $corpus['schema'], 'The corpus is the version the suite knows.');
+        $this->assertSame(
+            'kumwe-secret-envelope-corpus/v1',
+            $corpus['schema'],
+            'The corpus is the version the suite knows.',
+        );
         $this->assertTrue(count($corpus['vectors']) >= 6, 'The corpus records at least six vectors.');
         foreach ($corpus['vectors'] as $vector) {
             $envelope = EncryptedEnvelope::fromStorage($vector['storage']);

@@ -27,7 +27,7 @@ final class ConfigProvider
      *
      * @return  array{
      *              dependencies: array{
-     *                  factories: array<class-string, class-string>,
+     *                  factories: array<class-string, class-string<KeyRingEnvelopeCipherFactory>>,
      *                  aliases: array<class-string, class-string>,
      *                  shared: array<class-string, bool>
      *              }
@@ -44,7 +44,7 @@ final class ConfigProvider
      * Return the service-manager configuration alone, for a host that assembles its container by hand.
      *
      * @return  array{
-     *              factories: array<class-string, class-string>,
+     *              factories: array<class-string, class-string<KeyRingEnvelopeCipherFactory>>,
      *              aliases: array<class-string, class-string>,
      *              shared: array<class-string, bool>
      *          }  The factory, the alias and the lifetime; identical on every call.

@@ -37,7 +37,8 @@ if (is_file($autoload)) {
     });
 }
 
-$files = glob(__DIR__ . '/Case/*Test.php') ?: [];
+$discovered = glob(__DIR__ . '/Case/*Test.php');
+$files = $discovered === false ? [] : $discovered;
 sort($files, SORT_STRING);
 
 if ($files === []) {
@@ -64,7 +65,7 @@ foreach ($files as $file) {
         $totalTests++;
         $ran++;
         try {
-            $case->{$method}();
+            (new ReflectionMethod($case, $method))->invoke($case);
         } catch (Throwable $error) {
             $failures[] = sprintf(
                 '%s::%s - %s (%s:%d)',

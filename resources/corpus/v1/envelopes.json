@@ -1,0 +1,200 @@
+{
+    "schema": "kumwe-secret-envelope-corpus/v1",
+    "keys": {
+        "corpus-record-v1": {
+            "stem": "public-test-record-one"
+        },
+        "corpus-record-v2": {
+            "stem": "public-test-record-two"
+        },
+        "corpus-token-v1": {
+            "stem": "public-test-token-one"
+        }
+    },
+    "vectors": [
+        {
+            "name": "vector-0",
+            "key_id": "corpus-record-v1",
+            "associated_data": "corpus-record-v1\nsite-a\nrecord-0",
+            "plaintext_base64": "",
+            "storage": {
+                "ciphertext": "tXBhX6x7u5KRjasBIoD5Jw==",
+                "nonce": "AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB",
+                "key_id": "corpus-record-v1",
+                "algorithm": "xchacha20poly1305-ietf"
+            }
+        },
+        {
+            "name": "vector-1",
+            "key_id": "corpus-record-v2",
+            "associated_data": "corpus-record-v1\nsite-a\nrecord-1",
+            "plaintext_base64": "aGVsbG8=",
+            "storage": {
+                "ciphertext": "NLrG7kJt7ogxZ1XiidiE8lApysxO",
+                "nonce": "AgICAgICAgICAgICAgICAgICAgICAgIC",
+                "key_id": "corpus-record-v2",
+                "algorithm": "xchacha20poly1305-ietf"
+            }
+        },
+        {
+            "name": "vector-2",
+            "key_id": "corpus-record-v1",
+            "associated_data": "corpus-record-v1\nsite-a\nrecord-2",
+            "plaintext_base64": "AP8B",
+            "storage": {
+                "ciphertext": "51uQVxfQeY/6TuGgR+rzH22vVA==",
+                "nonce": "AwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMD",
+                "key_id": "corpus-record-v1",
+                "algorithm": "xchacha20poly1305-ietf"
+            }
+        },
+        {
+            "name": "vector-3",
+            "key_id": "corpus-record-v2",
+            "associated_data": "corpus-record-v1\nsite-a\nrecord-3",
+            "plaintext_base64": "TmFtaWJpYTogbmHDr3ZlIGNhZsOp",
+            "storage": {
+                "ciphertext": "AgLj+MNwDHi5SD3ez8lG8fE78dB9Yx3jqR7huUhmSoqPMIJDjg==",
+                "nonce": "BAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQE",
+                "key_id": "corpus-record-v2",
+                "algorithm": "xchacha20poly1305-ietf"
+            }
+        },
+        {
+            "name": "vector-4",
+            "key_id": "corpus-record-v1",
+            "associated_data": "corpus-record-v1\nsite-a\nrecord-4",
+            "plaintext_base64": "eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eA==",
+            "storage": {
+                "ciphertext": "u/G7k3HFzQCNsSKCm8OiNjdTp55dUN863PIgp3Qr4hDtz9va9tA66SS0f6teB5T0GDqq/WkpnwFjYzbMPfBoT4TRF4jV62VEU3SaVRcm8m/eYcCWd7PGpLR9rLU63o+nBhu9W5NeTs+1LkXFpTkhVk25jNieHWHWDKEriWiKT9w2eNQFNc0ncSicvL1j+LNoo63ZZn0VBK1C5fhWfZ6r6a2av6Xk58FmxHylm6ME/y+GjHk/+uhqqHgJHQELJJ3nyA6eCYj3nlfsd1Y1w/zDmyHXis+9LmnVtlyf1LsdAyc8/+o+HxoJ2d2/JahQL//UgI6nQkwIXfXYNly2Aw1HGYmzlAYg14Pl99Frn8EDPV0=",
+                "nonce": "BQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUF",
+                "key_id": "corpus-record-v1",
+                "algorithm": "xchacha20poly1305-ietf"
+            }
+        },
+        {
+            "name": "vector-5",
+            "key_id": "corpus-record-v2",
+            "associated_data": "corpus-record-v1\nsite-a\nrecord-5",
+            "plaintext_base64": "bGluZTEKbGluZTI=",
+            "storage": {
+                "ciphertext": "Gyjtt8M7EpYkMMMa5MDJBRZDi0kjeXTGcBJc",
+                "nonce": "BgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYG",
+                "key_id": "corpus-record-v2",
+                "algorithm": "xchacha20poly1305-ietf"
+            }
+        }
+    ],
+    "refusals": [
+        {
+            "name": "wrong-domain",
+            "associated_data": "other-purpose",
+            "storage": {
+                "ciphertext": "NLrG7kJt7ogxZ1XiidiE8lApysxO",
+                "nonce": "AgICAgICAgICAgICAgICAgICAgICAgIC",
+                "key_id": "corpus-record-v2",
+                "algorithm": "xchacha20poly1305-ietf"
+            },
+            "exception": "Kumwe\\Secret\\Exception\\AuthenticationFailed"
+        },
+        {
+            "name": "refusal-0",
+            "associated_data": "corpus-record-v1\nsite-a\nrecord-1",
+            "storage": {
+                "ciphertext": "NLrG7kJt7ogxZ1XiidiE8lApysxO",
+                "nonce": "AgICAgICAgICAgICAgICAgICAgICAgIC",
+                "key_id": "unknown",
+                "algorithm": "xchacha20poly1305-ietf"
+            },
+            "exception": "Kumwe\\Secret\\Exception\\KeyUnavailable"
+        },
+        {
+            "name": "refusal-1",
+            "associated_data": "corpus-record-v1\nsite-a\nrecord-1",
+            "storage": {
+                "ciphertext": "NLrG7kJt7ogxZ1XiidiE8lApysxO",
+                "nonce": "AgICAgICAgICAgICAgICAgICAgICAgIC",
+                "key_id": "corpus-token-v1",
+                "algorithm": "xchacha20poly1305-ietf"
+            },
+            "exception": "Kumwe\\Secret\\Exception\\KeyUnavailable"
+        },
+        {
+            "name": "refusal-2",
+            "associated_data": "corpus-record-v1\nsite-a\nrecord-1",
+            "storage": {
+                "ciphertext": "NLrG7kJt7ogxZ1XiidiE8lApysxO",
+                "nonce": "AgICAgICAgICAgICAgICAgICAgICAgIC",
+                "key_id": "corpus-record-v2",
+                "algorithm": "aes-128-ecb"
+            },
+            "exception": "Kumwe\\Secret\\Exception\\InvalidEnvelope"
+        },
+        {
+            "name": "refusal-3",
+            "associated_data": "corpus-record-v1\nsite-a\nrecord-1",
+            "storage": {
+                "ciphertext": "NLrG7kJt7ogxZ1XiidiE8lApysxO",
+                "nonce": "****",
+                "key_id": "corpus-record-v2",
+                "algorithm": "xchacha20poly1305-ietf"
+            },
+            "exception": "Kumwe\\Secret\\Exception\\InvalidEnvelope"
+        },
+        {
+            "name": "refusal-4",
+            "associated_data": "corpus-record-v1\nsite-a\nrecord-1",
+            "storage": {
+                "ciphertext": "",
+                "nonce": "AgICAgICAgICAgICAgICAgICAgICAgIC",
+                "key_id": "corpus-record-v2",
+                "algorithm": "xchacha20poly1305-ietf"
+            },
+            "exception": "Kumwe\\Secret\\Exception\\InvalidEnvelope"
+        },
+        {
+            "name": "refusal-5",
+            "associated_data": "corpus-record-v1\nsite-a\nrecord-1",
+            "storage": {
+                "ciphertext": "NLrG7kJt7ogxZ1XiidiE8lApysxO",
+                "nonce": "c2hvcnQ=",
+                "key_id": "corpus-record-v2",
+                "algorithm": "xchacha20poly1305-ietf"
+            },
+            "exception": "Kumwe\\Secret\\Exception\\InvalidEnvelope"
+        },
+        {
+            "name": "refusal-6",
+            "associated_data": "corpus-record-v1\nsite-a\nrecord-1",
+            "storage": {
+                "ciphertext": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "nonce": "AgICAgICAgICAgICAgICAgICAgICAgIC",
+                "key_id": "corpus-record-v2",
+                "algorithm": "xchacha20poly1305-ietf"
+            },
+            "exception": "Kumwe\\Secret\\Exception\\AuthenticationFailed"
+        },
+        {
+            "name": "refusal-7",
+            "associated_data": "corpus-record-v1\nsite-a\nrecord-1",
+            "storage": {
+                "ciphertext": "NLrG7kJt7ogxZ1XiidiE8lApysxO",
+                "nonce": "////////////////////////////////",
+                "key_id": "corpus-record-v2",
+                "algorithm": "xchacha20poly1305-ietf"
+            },
+            "exception": "Kumwe\\Secret\\Exception\\AuthenticationFailed"
+        },
+        {
+            "name": "refusal-8",
+            "associated_data": "corpus-record-v1\nsite-a\nrecord-1",
+            "storage": {
+                "ciphertext": "NLrG7kJt7ogxZ1XiidiE8lApysxO",
+                "nonce": "AgICAgICAgICAgICAgICAgICAgICAgIC",
+                "key_id": "corpus-record-v1",
+                "algorithm": "xchacha20poly1305-ietf"
+            },
+            "exception": "Kumwe\\Secret\\Exception\\AuthenticationFailed"
+        }
+    ]
+}

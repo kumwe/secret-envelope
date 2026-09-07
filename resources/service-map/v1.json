@@ -1,0 +1,19 @@
+{
+  "schema": "kumwe-package-service-map/v1",
+  "package": "kumwe/secret-envelope",
+  "release": "0.1.0",
+  "config_provider": "Kumwe\\Secret\\ConfigProvider",
+  "provider_absence_reason": null,
+  "factories": [
+    {
+      "service": "Kumwe\\Secret\\Cipher\\KeyRingEnvelopeCipher",
+      "factory": "Kumwe\\Secret\\Container\\KeyRingEnvelopeCipherFactory",
+      "lifetime": "shared"
+    }
+  ],
+  "aliases": {
+    "Kumwe\\Secret\\Contract\\EnvelopeCipher": "Kumwe\\Secret\\Cipher\\KeyRingEnvelopeCipher"
+  },
+  "delegators": [],
+  "configuration_keys": []
+}

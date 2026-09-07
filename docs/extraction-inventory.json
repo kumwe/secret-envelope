@@ -1,0 +1,300 @@
+{
+  "schema": "kumwe-secret-extraction-inventory/v1",
+  "app_baseline": "960ce8ec00cf724a7cae03e5ba09c4852c9ab54e",
+  "symbols": [
+    {
+      "old_fqcn": "Kumwe\\App\\BusinessRecord\\Domain\\EncryptedEnvelope",
+      "new_fqcn": "Kumwe\\Secret\\Value\\EncryptedEnvelope",
+      "source_path": "src/BusinessRecord/Domain/EncryptedEnvelope.php",
+      "target_path": "src/Value/EncryptedEnvelope.php",
+      "kind": "class",
+      "public_methods": [
+        "__construct",
+        "fromStorage",
+        "toStorage"
+      ],
+      "public_properties": [
+        "algorithm",
+        "ciphertext",
+        "keyId",
+        "nonce"
+      ],
+      "public_constants": [
+        "ALGORITHM",
+        "MAXIMUM_CIPHERTEXT_BYTES",
+        "MINIMUM_CIPHERTEXT_BYTES",
+        "NONCE_BYTES"
+      ],
+      "exceptions": [
+        "Kumwe\\Secret\\Exception\\SecretException"
+      ],
+      "serialization_contract": "Base64 ciphertext, nonce, key_id and fixed algorithm preserved.",
+      "compatibility": "Namespace migration; typed errors and documented validation hardening; see architecture decisions."
+    },
+    {
+      "old_fqcn": "Kumwe\\App\\BusinessRecord\\Domain\\SecretKeyMaterial",
+      "new_fqcn": "Kumwe\\Secret\\Value\\KeyMaterial",
+      "source_path": "src/BusinessRecord/Domain/SecretKeyMaterial.php",
+      "target_path": "src/Value/KeyMaterial.php",
+      "kind": "class",
+      "public_methods": [
+        "__construct",
+        "__debugInfo",
+        "__serialize",
+        "material"
+      ],
+      "public_properties": [
+        "keyId"
+      ],
+      "public_constants": [
+        "KEY_BYTES"
+      ],
+      "exceptions": [
+        "Kumwe\\Secret\\Exception\\SecretException"
+      ],
+      "serialization_contract": null,
+      "compatibility": "Namespace migration; typed errors and documented validation hardening; see architecture decisions."
+    },
+    {
+      "old_fqcn": "Kumwe\\App\\BusinessRecord\\Domain\\SecretKeyRing",
+      "new_fqcn": "Kumwe\\Secret\\Value\\KeyRing",
+      "source_path": "src/BusinessRecord/Domain/SecretKeyRing.php",
+      "target_path": "src/Value/KeyRing.php",
+      "kind": "class",
+      "public_methods": [
+        "__construct",
+        "keyFor",
+        "keyIds"
+      ],
+      "public_properties": [
+        "active"
+      ],
+      "public_constants": [
+        "MAXIMUM_RETIRED_KEYS"
+      ],
+      "exceptions": [
+        "Kumwe\\Secret\\Exception\\SecretException"
+      ],
+      "serialization_contract": null,
+      "compatibility": "Namespace migration; typed errors and documented validation hardening; see architecture decisions."
+    },
+    {
+      "old_fqcn": "Kumwe\\App\\BusinessRecord\\Domain\\SecretKeyUnavailable",
+      "new_fqcn": "Kumwe\\Secret\\Exception\\KeyUnavailable",
+      "source_path": "src/BusinessRecord/Domain/SecretKeyUnavailable.php",
+      "target_path": "src/Exception/KeyUnavailable.php",
+      "kind": "class",
+      "public_methods": [
+        "__construct",
+        "keyId"
+      ],
+      "public_properties": [],
+      "public_constants": [],
+      "exceptions": [
+        "Kumwe\\Secret\\Exception\\SecretException"
+      ],
+      "serialization_contract": null,
+      "compatibility": "Namespace migration; typed errors and documented validation hardening; see architecture decisions."
+    },
+    {
+      "old_fqcn": "Kumwe\\App\\BusinessRecord\\Application\\SecretCipher",
+      "new_fqcn": "Kumwe\\Secret\\Contract\\EnvelopeCipher",
+      "source_path": "src/BusinessRecord/Application/SecretCipher.php",
+      "target_path": "src/Contract/EnvelopeCipher.php",
+      "kind": "interface",
+      "public_methods": [
+        "decrypt",
+        "encrypt"
+      ],
+      "public_properties": [],
+      "public_constants": [],
+      "exceptions": [
+        "Kumwe\\Secret\\Exception\\SecretException"
+      ],
+      "serialization_contract": null,
+      "compatibility": "Namespace migration; typed errors and documented validation hardening; see architecture decisions."
+    },
+    {
+      "old_fqcn": "Kumwe\\App\\BusinessRecord\\Application\\SecretKeyProvider",
+      "new_fqcn": "Kumwe\\Secret\\Contract\\KeyProvider",
+      "source_path": "src/BusinessRecord/Application/SecretKeyProvider.php",
+      "target_path": "src/Contract/KeyProvider.php",
+      "kind": "interface",
+      "public_methods": [
+        "activeKey",
+        "activeKeyId",
+        "keyFor",
+        "knownKeyIds"
+      ],
+      "public_properties": [],
+      "public_constants": [],
+      "exceptions": [
+        "Kumwe\\Secret\\Exception\\SecretException"
+      ],
+      "serialization_contract": null,
+      "compatibility": "Namespace migration; typed errors and documented validation hardening; see architecture decisions."
+    },
+    {
+      "old_fqcn": "Kumwe\\App\\BusinessRecord\\Infrastructure\\Security\\SodiumSecretCipher",
+      "new_fqcn": "Kumwe\\Secret\\Cipher\\SodiumEnvelopeCipher",
+      "source_path": "src/BusinessRecord/Infrastructure/Security/SodiumSecretCipher.php",
+      "target_path": "src/Cipher/SodiumEnvelopeCipher.php",
+      "kind": "class",
+      "public_methods": [
+        "__construct",
+        "decrypt",
+        "encrypt",
+        "keyId"
+      ],
+      "public_properties": [],
+      "public_constants": [
+        "MAXIMUM_ASSOCIATED_DATA_BYTES",
+        "MAXIMUM_PLAINTEXT_BYTES"
+      ],
+      "exceptions": [
+        "Kumwe\\Secret\\Exception\\SecretException"
+      ],
+      "serialization_contract": null,
+      "compatibility": "Namespace migration; typed errors and documented validation hardening; see architecture decisions."
+    },
+    {
+      "old_fqcn": "Kumwe\\App\\BusinessRecord\\Infrastructure\\Security\\KeyRingSecretCipher",
+      "new_fqcn": "Kumwe\\Secret\\Cipher\\KeyRingEnvelopeCipher",
+      "source_path": "src/BusinessRecord/Infrastructure/Security/KeyRingSecretCipher.php",
+      "target_path": "src/Cipher/KeyRingEnvelopeCipher.php",
+      "kind": "class",
+      "public_methods": [
+        "__construct",
+        "decrypt",
+        "encrypt"
+      ],
+      "public_properties": [],
+      "public_constants": [],
+      "exceptions": [
+        "Kumwe\\Secret\\Exception\\SecretException"
+      ],
+      "serialization_contract": null,
+      "compatibility": "Namespace migration; typed errors and documented validation hardening; see architecture decisions."
+    },
+    {
+      "old_fqcn": "Kumwe\\App\\BusinessRecord\\Infrastructure\\Security\\KeyRingSecretKeyProvider",
+      "new_fqcn": "Kumwe\\Secret\\Provider\\KeyRingKeyProvider",
+      "source_path": "src/BusinessRecord/Infrastructure/Security/KeyRingSecretKeyProvider.php",
+      "target_path": "src/Provider/KeyRingKeyProvider.php",
+      "kind": "class",
+      "public_methods": [
+        "__construct",
+        "activeKey",
+        "activeKeyId",
+        "keyFor",
+        "knownKeyIds"
+      ],
+      "public_properties": [],
+      "public_constants": [],
+      "exceptions": [
+        "Kumwe\\Secret\\Exception\\SecretException"
+      ],
+      "serialization_contract": null,
+      "compatibility": "Namespace migration; typed errors and documented validation hardening; see architecture decisions."
+    }
+  ],
+  "host_policy_retained": [
+    "src/BusinessRecord/Domain/SecretKeyPurpose.php",
+    "src/BusinessRecord/Application/SecretAssociatedData.php",
+    "src/BusinessRecord/Infrastructure/Security/ConfiguredSecretKeyRings.php",
+    "src/BusinessSurface/Infrastructure/Security/KeyRingMutationPlanCipher.php"
+  ],
+  "consumer_files": [
+    "tests/Integration/BusinessRecord/RecordSecretRotationIntegrationTest.php",
+    "src/BusinessRecord/Application/SecretAssociatedData.php",
+    "src/BusinessRecord/Application/SecretCipher.php",
+    "src/BusinessRecord/Application/RecordSecretRotation.php",
+    "src/BusinessRecord/Application/RecordValueCodec.php",
+    "src/BusinessRecord/Application/SecretKeyProvider.php",
+    "src/Kernel/Configuration/RecordEncryptionConfiguration.php",
+    "src/Kernel/ContainerFactory.php",
+    "tests/Architecture/ProductionArtifactsTest.php",
+    "tests/Architecture/MoneyConversionBoundaryTest.php",
+    "tests/Architecture/UnitConversionBoundaryTest.php",
+    "src/BusinessRecord/Infrastructure/Persistence/DoctrineRecordSecretRotation.php",
+    "src/BusinessRecord/Infrastructure/Security/KeyRingSecretCipher.php",
+    "src/BusinessRecord/Infrastructure/Security/ConfiguredSecretKeyRings.php",
+    "src/BusinessRecord/Infrastructure/Security/KeyRingSecretKeyProvider.php",
+    "src/BusinessRecord/Infrastructure/Security/SodiumSecretCipher.php",
+    "src/BusinessRecord/Domain/SecretKeyUnavailable.php",
+    "src/BusinessRecord/Domain/SecretKeyRing.php",
+    "src/BusinessRecord/Domain/SecretKeyPurpose.php",
+    "src/BusinessRecord/Domain/EncryptedEnvelope.php",
+    "src/BusinessRecord/Domain/SecretKeyMaterial.php",
+    "src/BusinessRecord/Domain/RecordValueGuard.php",
+    "src/Identity/Infrastructure/StepUp/SodiumStepUpSecretCipher.php",
+    "src/Identity/Application/StepUp/StepUpSecretCipher.php",
+    "src/Identity/Application/StepUp/TotpStepUpProvider.php",
+    "src/BusinessSurface/Application/MutationPlanCipher.php",
+    "src/BusinessSurface/Application/BusinessMutationPlanService.php",
+    "src/BusinessSurface/Infrastructure/Security/KeyRingMutationPlanCipher.php",
+    "tests/Unit/BusinessSurface/Application/BusinessMutationPlanServiceTest.php",
+    "tests/Deployment/record-key-rotation-strand.php",
+    "tests/Unit/Identity/Application/StepUp/TotpStepUpProviderTest.php",
+    "tests/Unit/BusinessRecord/Application/PostingPeriodLockTest.php",
+    "tests/Unit/BusinessRecord/Application/RecordRuleValidatorTest.php",
+    "tests/Unit/BusinessRecord/Application/BusinessRecordRelationshipCoordinatorTest.php",
+    "tests/Unit/BusinessRecord/Application/AggregateInvariantValidationTest.php",
+    "tests/Unit/BusinessRecord/Infrastructure/SecretKeyLifecycleTest.php",
+    "tests/Unit/BusinessRecord/Infrastructure/SodiumSecretCipherTest.php",
+    "tests/Unit/BusinessRecord/Domain/EncryptedEnvelopeTest.php",
+    "tests/Unit/BusinessRecord/Domain/RecordIntegrityTest.php",
+    "tests/Unit/BusinessRecord/Domain/ExactValueCodecTest.php",
+    "tests/Unit/Identity/Infrastructure/StepUp/SodiumStepUpSecretCipherTest.php",
+    "tests/Support/BusinessRuntimeBackupAcceptance.php",
+    "tests/Support/RestoreSecurityAcceptance.php"
+  ],
+  "source_file_sha256": {
+    "composer.json": "c24e50ef522537e98a8d1f6c3192c981aedf664888418d16738e47e3962500a3",
+    "composer.lock": "0076158c4deecc47dd07ed42658b5b8970555e498654dabbff29b54daf6bd8b7",
+    "docs/architecture/capability-index.md": "8fb2a8680bed6ac1456183bc9e48fe040194923b6d1b3331f04cea28bd5a9b2f",
+    "src/BusinessRecord/Application/RecordSecretRotation.php": "51c470cb6c4a13a5755b31667afa92c0d6dad6f0a4578c166946286e1825192a",
+    "src/BusinessRecord/Application/RecordValueCodec.php": "7028ac009854b53bd7af010c0583d8c4ecefec647bd7bd7b21762232fa453a72",
+    "src/BusinessRecord/Application/SecretAssociatedData.php": "12c919ddee8198b751b44b3ddeb96379df2d74f03dd4207b8fa7979a95604872",
+    "src/BusinessRecord/Application/SecretCipher.php": "07c5a1ab77e43a5158a0897b00906c5837c569d86558141a8278ffb6f8372270",
+    "src/BusinessRecord/Application/SecretKeyProvider.php": "d001b10a06e0a89a61bad45e5f5a89a4e5ecae8567db2ffe99e033d3e2c7b7f5",
+    "src/BusinessRecord/Domain/EncryptedEnvelope.php": "61f1131a786e82c5a4c19c1d53626c89af52c6f8139d3de9ef0a23c6d8b177fb",
+    "src/BusinessRecord/Domain/RecordValueGuard.php": "3fa9cc301900cac3b84f2a5b3b37b81824521cad927ab22be6aac6d27a94b028",
+    "src/BusinessRecord/Domain/SecretKeyMaterial.php": "5fa67907d10ac054f1a0e67a66bc49be734501fbe85644290b0d6285bdab999b",
+    "src/BusinessRecord/Domain/SecretKeyPurpose.php": "9e85944981e48e5ef724b12bd0532fab475887fa73ebd9f1b74ac3dc3da0dccf",
+    "src/BusinessRecord/Domain/SecretKeyRing.php": "6cd416179dac49038a5dc402a652ecc80db6b0ac18f5fced433ad72a87b74088",
+    "src/BusinessRecord/Domain/SecretKeyUnavailable.php": "a09d103970cf28f2c258c4fba85994d398dd567e9ae785e35cf66bc226e01292",
+    "src/BusinessRecord/Infrastructure/Persistence/DoctrineRecordSecretRotation.php": "2e85aba72565f0788db0a4730c2efb128c2f666a12859022c7ca38ae5d478665",
+    "src/BusinessRecord/Infrastructure/Security/ConfiguredSecretKeyRings.php": "4b89fa4c322eeaad9f63be23ddc22e56eefff663aeff4d5b6d87405e7720a89b",
+    "src/BusinessRecord/Infrastructure/Security/KeyRingSecretCipher.php": "4ad62ac9e8145a05ac06bed6d66f1d9392403cc9890bbe9044e1a4aa6260d37a",
+    "src/BusinessRecord/Infrastructure/Security/KeyRingSecretKeyProvider.php": "0219cab79661467a5863b22f92c8ce3597eae27b2a44d7235c321ddeb1fec54c",
+    "src/BusinessRecord/Infrastructure/Security/SodiumSecretCipher.php": "e0f63416f6c356bedc1008a9a451be9e46f25d52b7f035daf110c87061ed80f7",
+    "src/BusinessSurface/Application/BusinessMutationPlanService.php": "45cebd524b111dc79c052d9e7b4d44bae0e5a2a7d7d70e449f19089ab4915a31",
+    "src/BusinessSurface/Application/MutationPlanCipher.php": "e21dffb08d95f41faae4638e8dbbab67194db6b73ef953dabed801b4d8fa45d7",
+    "src/BusinessSurface/Infrastructure/Security/KeyRingMutationPlanCipher.php": "fa1d1da75e9eaa3b0b22bfbc2f8ce22858475af6ffa423e94a2764fd14c11328",
+    "src/Identity/Application/StepUp/StepUpSecretCipher.php": "fa5e47d2ef409306121dd5cfb320184e38c681099b8f6aacdd18e42608dd1dc9",
+    "src/Identity/Application/StepUp/TotpStepUpProvider.php": "4e4e58d3cfb27f314d3d9988ab894a7780d26ae25abe116c85786cc710a88cbe",
+    "src/Identity/Infrastructure/StepUp/SodiumStepUpSecretCipher.php": "150b523db33ee30c323e4dab8776c67c8a606efad9c9c7935e8032a7c7c2ba81",
+    "src/Kernel/Configuration/RecordEncryptionConfiguration.php": "60a9c7d59d9b57a14802d67d97377319a42801af70b9541a5270815dd810d129",
+    "src/Kernel/ContainerFactory.php": "a6a80726c6b408103a75945225994556957bc7361b52583466bab5a28899b787",
+    "tests/Architecture/MoneyConversionBoundaryTest.php": "2d71fba5b31ac6fd25aad9a4997f450aaba378b3a95a8ce22585b09824c17bae",
+    "tests/Architecture/ProductionArtifactsTest.php": "3f722cd95192e24dca881e7313743341b559223d5f61e0ddf727a0f2049041d4",
+    "tests/Architecture/UnitConversionBoundaryTest.php": "4f6ee8afd7b35be50dcc6339af99ae0dff9a0d7cb5fe9a837e5381e9a2c48c15",
+    "tests/Deployment/record-key-rotation-strand.php": "f127ad1c50dac71600eb0049732069ba9baec410cb165ff9f13c4e6f7b877f6d",
+    "tests/Integration/BusinessRecord/RecordSecretRotationIntegrationTest.php": "cde79d4be2df5c41660744e571d2628ad7ac4b1d17cbe445defbb6f8de35b052",
+    "tests/Support/BusinessRuntimeBackupAcceptance.php": "0ff937d672ac278277bc86367285b060e7e23359ed65f4f555e26f3fa85294e7",
+    "tests/Support/RestoreSecurityAcceptance.php": "4b016b0608123e6d55ea49e7751f39515a0194a588632b7022aea02abf1e6dc8",
+    "tests/Unit/BusinessRecord/Application/AggregateInvariantValidationTest.php": "5c143fce6aa08f54484b82f51db866d0f784607c028d3b7e82f07d2b9425102e",
+    "tests/Unit/BusinessRecord/Application/BusinessRecordRelationshipCoordinatorTest.php": "321477c72ac0ca646176b278c7e50d2ed0f12ee192564d31afb277b0398a25fa",
+    "tests/Unit/BusinessRecord/Application/PostingPeriodLockTest.php": "ee3b3b80c22fffa15c392e65dac2119089cdf79e66337b38d6b2e85382094cb9",
+    "tests/Unit/BusinessRecord/Application/RecordRuleValidatorTest.php": "7378c1cc220a2954b682b51dd92bede143adec50c3abff6341eb159b42538027",
+    "tests/Unit/BusinessRecord/Domain/EncryptedEnvelopeTest.php": "31e3fb224917803d66857cf1ce18c919e2b3dc5a87a20dd727d9cfe7dd3af854",
+    "tests/Unit/BusinessRecord/Domain/ExactValueCodecTest.php": "b5d4ae29f33ff00de6f2cfd5bda7834ce1aead183561f4587cd86e2b4cbe913a",
+    "tests/Unit/BusinessRecord/Domain/RecordIntegrityTest.php": "999bb7f72bcc23219c6834a192d36209d3a54dc19cd38402d37b8bb59ed0d1fe",
+    "tests/Unit/BusinessRecord/Infrastructure/SecretKeyLifecycleTest.php": "def4865edbebd997e66bded0d9316f3d2a3bead31c3c4f64a18851041237b77e",
+    "tests/Unit/BusinessRecord/Infrastructure/SodiumSecretCipherTest.php": "379db3367bb84cb9e1e2c276f7ef6750c7f481139b294b40f4ed1bb988cfe5c4",
+    "tests/Unit/BusinessSurface/Application/BusinessMutationPlanServiceTest.php": "da86206d23e4aab25c90045651bf4b278db41b6e4337537baacb071698a0b62e",
+    "tests/Unit/Identity/Application/StepUp/TotpStepUpProviderTest.php": "a9c895864d13c95ebcc076386edbfc77699eb50c8ac326b990170c28cad50b01",
+    "tests/Unit/Identity/Infrastructure/StepUp/SodiumStepUpSecretCipherTest.php": "b8453a165358b9e6ac772bd036b7cc4a5b175a64a6598dfe5c2af14e2e24931c"
+  }
+}

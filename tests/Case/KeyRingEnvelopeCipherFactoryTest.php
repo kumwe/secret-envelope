@@ -51,12 +51,17 @@ final class KeyRingEnvelopeCipherFactoryTest extends TestCase
     public function testWrongOrMissingBindingsAreRefusedAtConstruction(): void
     {
         $factory = new KeyRingEnvelopeCipherFactory();
+        $misconfigured = new ScriptedContainer([KeyProvider::class => 'not a provider']);
         $wrong = $this->assertThrows(
-            static fn (): KeyRingEnvelopeCipher => $factory(new ScriptedContainer([KeyProvider::class => 'not a provider'])),
+            static fn (): KeyRingEnvelopeCipher => $factory($misconfigured),
             ServiceBindingRefused::class,
             'A binding of the wrong type is refused before wiring.',
         );
-        $this->assertInstanceOf(ContainerExceptionInterface::class, $wrong, 'The refusal is a PSR-11 container exception.');
+        $this->assertInstanceOf(
+            ContainerExceptionInterface::class,
+            $wrong,
+            'The refusal is a PSR-11 container exception.',
+        );
         $this->assertStringContains(KeyProvider::class, $wrong->getMessage(), 'The refusal names the identifier.');
         $this->assertStringContains('string', $wrong->getMessage(), 'The refusal names the type it got.');
         $this->assertThrows(
