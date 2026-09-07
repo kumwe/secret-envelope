@@ -39,7 +39,11 @@ final class SodiumEnvelopeCipherTest extends TestCase
         $this->assertSame('fixture-key-v1', $envelope->keyId, 'The envelope carries the key identifier.');
         $this->assertSame(EncryptedEnvelope::ALGORITHM, $envelope->algorithm, 'The envelope names the construction.');
         $this->assertSame(15 + 16, strlen($envelope->ciphertext), 'Ciphertext is the plaintext plus the tag.');
-        $this->assertSame('not-for-history', $cipher->decrypt($envelope, Fixture::binding()), 'The value comes back exactly.');
+        $this->assertSame(
+            'not-for-history',
+            $cipher->decrypt($envelope, Fixture::binding()),
+            'The value comes back exactly.',
+        );
         $stored = json_encode($envelope->toStorage(), JSON_THROW_ON_ERROR);
         $this->assertStringExcludes('not-for-history', $stored, 'Stored form never carries the plaintext.');
         $this->assertStringExcludes(Fixture::key('fixture-key-v1')->material(), $stored, 'Stored form carries no key.');
@@ -50,7 +54,11 @@ final class SodiumEnvelopeCipherTest extends TestCase
         );
         $this->assertSame('', $cipher->decrypt($cipher->encrypt('', 'b'), 'b'), 'An empty plaintext round-trips.');
         $binary = random_bytes(512);
-        $this->assertSame($binary, $cipher->decrypt($cipher->encrypt($binary, ''), ''), 'Binary round-trips with empty AD.');
+        $this->assertSame(
+            $binary,
+            $cipher->decrypt($cipher->encrypt($binary, ''), ''),
+            'Binary round-trips with empty AD.',
+        );
     }
 
     /**
@@ -71,7 +79,11 @@ final class SodiumEnvelopeCipherTest extends TestCase
             $nonces[$envelope->nonce] = true;
             $ciphertexts[$envelope->ciphertext] = true;
         }
-        $this->assertCount(256, $nonces, 'Two hundred and fifty-six encryptions drew two hundred and fifty-six nonces.');
+        $this->assertCount(
+            256,
+            $nonces,
+            'Two hundred and fifty-six encryptions drew two hundred and fifty-six nonces.',
+        );
         $this->assertCount(256, $ciphertexts, 'Equal plaintexts never produce equal ciphertexts.');
         $bytes = array_count_values(array_map(static fn (string $nonce): string => $nonce[0], array_keys($nonces)));
         $this->assertTrue(count($bytes) > 32, 'The first nonce byte varies widely rather than being constant.');
@@ -88,7 +100,14 @@ final class SodiumEnvelopeCipherTest extends TestCase
     {
         $cipher = new SodiumEnvelopeCipher(Fixture::key('fixture-key-v1'));
         $envelope = $cipher->encrypt('protected', Fixture::binding('record-a'));
-        foreach ([Fixture::binding('record-b'), '', Fixture::binding('record-a') . "\n", 'x' . Fixture::binding('record-a')] as $binding) {
+        foreach (
+            [
+            Fixture::binding('record-b'),
+            '',
+            Fixture::binding('record-a') . "\n",
+            'x' . Fixture::binding('record-a'),
+            ] as $binding
+        ) {
             $this->assertThrows(
                 static fn (): string => $cipher->decrypt($envelope, $binding),
                 AuthenticationFailed::class,
@@ -112,7 +131,7 @@ final class SodiumEnvelopeCipherTest extends TestCase
         for ($offset = 0; $offset < $length; $offset++) {
             foreach ([0x01, 0x80, 0xff] as $mask) {
                 $tampered = $envelope->ciphertext;
-                $tampered[$offset] = chr(ord($tampered[$offset]) ^ $mask);
+                $tampered[$offset] = chr((ord($tampered[$offset]) ^ $mask) & 0xff);
                 $this->assertThrows(
                     static fn (): string => $cipher->decrypt(
                         new EncryptedEnvelope($tampered, $envelope->nonce, $envelope->keyId),
@@ -125,9 +144,12 @@ final class SodiumEnvelopeCipherTest extends TestCase
         }
         for ($offset = 0; $offset < EncryptedEnvelope::NONCE_BYTES; $offset++) {
             $nonce = $envelope->nonce;
-            $nonce[$offset] = chr(ord($nonce[$offset]) ^ 0x01);
+            $nonce[$offset] = chr((ord($nonce[$offset]) ^ 0x01) & 0xff);
             $this->assertThrows(
-                static fn (): string => $cipher->decrypt(new EncryptedEnvelope($envelope->ciphertext, $nonce, 'fixture-key-v1'), 'binding'),
+                static fn (): string => $cipher->decrypt(
+                    new EncryptedEnvelope($envelope->ciphertext, $nonce, 'fixture-key-v1'),
+                    'binding',
+                ),
                 AuthenticationFailed::class,
                 "Flipping nonce byte {$offset} fails authentication.",
             );
@@ -148,16 +170,24 @@ final class SodiumEnvelopeCipherTest extends TestCase
         $length = strlen($envelope->ciphertext);
         for ($keep = $length - 1; $keep >= 0; $keep--) {
             $truncated = substr($envelope->ciphertext, 0, $keep);
-            $expected = $keep < EncryptedEnvelope::MINIMUM_CIPHERTEXT_BYTES ? InvalidEnvelope::class : AuthenticationFailed::class;
+            $expected = $keep < EncryptedEnvelope::MINIMUM_CIPHERTEXT_BYTES
+                ? InvalidEnvelope::class
+                : AuthenticationFailed::class;
             $this->assertThrows(
-                static fn (): string => $cipher->decrypt(new EncryptedEnvelope($truncated, $envelope->nonce, 'fixture-key-v1'), 'binding'),
+                static fn (): string => $cipher->decrypt(
+                    new EncryptedEnvelope($truncated, $envelope->nonce, 'fixture-key-v1'),
+                    'binding',
+                ),
                 $expected,
                 "A ciphertext truncated to {$keep} bytes fails closed.",
             );
         }
         $extended = $envelope->ciphertext . "\x00";
         $this->assertThrows(
-            static fn (): string => $cipher->decrypt(new EncryptedEnvelope($extended, $envelope->nonce, 'fixture-key-v1'), 'binding'),
+            static fn (): string => $cipher->decrypt(
+                new EncryptedEnvelope($extended, $envelope->nonce, 'fixture-key-v1'),
+                'binding',
+            ),
             AuthenticationFailed::class,
             'A ciphertext with an appended byte fails authentication.',
         );
@@ -185,7 +215,11 @@ final class SodiumEnvelopeCipherTest extends TestCase
             KeyUnavailable::class,
             'An envelope naming another key is unavailable rather than attempted.',
         );
-        $this->assertStringContains('"retired-key-v1" is unavailable', $unavailable->getMessage(), 'The name is stated.');
+        $this->assertStringContains(
+            '"retired-key-v1" is unavailable',
+            $unavailable->getMessage(),
+            'The name is stated.',
+        );
         $this->assertStringExcludes('authenticat', $unavailable->getMessage(), 'It is not reported as tampering.');
 
         $sameNameOtherBytes = new SodiumEnvelopeCipher(new KeyMaterial('retired-key-v1', Fixture::bytes('other')));
@@ -225,7 +259,11 @@ final class SodiumEnvelopeCipherTest extends TestCase
             InvalidInput::class,
             'One byte over the associated-data bound is refused on encrypt.',
         );
-        $this->assertStringContains('associated data exceeds', $adTooLong->getMessage(), 'The binding refusal is named.');
+        $this->assertStringContains(
+            'associated data exceeds',
+            $adTooLong->getMessage(),
+            'The binding refusal is named.',
+        );
         $this->assertThrows(
             static fn (): string => $cipher->decrypt($sealed, str_repeat('a', 4097)),
             InvalidInput::class,
@@ -250,14 +288,23 @@ final class SodiumEnvelopeCipherTest extends TestCase
         $envelope = $cipher->encrypt(Fixture::PLAINTEXT, 'record-a');
         $attempts = [
             static fn (): string => $cipher->decrypt($envelope, 'record-b'),
-            static fn (): string => (new SodiumEnvelopeCipher(Fixture::key('other-key-v1')))->decrypt($envelope, 'record-a'),
+            static fn (): string => (new SodiumEnvelopeCipher(Fixture::key('other-key-v1')))->decrypt(
+                $envelope,
+                'record-a',
+            ),
             static fn (): string => $cipher->decrypt(
                 new EncryptedEnvelope(substr($envelope->ciphertext, 0, 20), $envelope->nonce, $envelope->keyId),
                 'record-a',
             ),
-            static fn (): string => $cipher->encrypt(Fixture::PLAINTEXT . str_repeat('x', 1_000_000), 'record-a')->ciphertext,
+            static fn (): string => $cipher->encrypt(
+                Fixture::PLAINTEXT . str_repeat('x', 1_000_000),
+                'record-a',
+            )->ciphertext,
             static fn (): string => $cipher->encrypt(Fixture::PLAINTEXT, str_repeat('a', 4097))->ciphertext,
-            static fn (): string => (new SodiumEnvelopeCipher(new KeyMaterial('k', $key->material())))->decrypt($envelope, 'x'),
+            static fn (): string => (new SodiumEnvelopeCipher(new KeyMaterial(
+                'k',
+                $key->material(),
+            )))->decrypt($envelope, 'x'),
         ];
         $rendered = [];
         foreach ($attempts as $attempt) {

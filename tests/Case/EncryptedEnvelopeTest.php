@@ -31,7 +31,12 @@ final class EncryptedEnvelopeTest extends TestCase
     {
         $nonce = base64_encode(str_repeat("\x11", EncryptedEnvelope::NONCE_BYTES));
         $ciphertext = base64_encode(str_repeat("\x22", 48));
-        $well = ['ciphertext' => $ciphertext, 'nonce' => $nonce, 'key_id' => 'k1', 'algorithm' => 'xchacha20poly1305-ietf'];
+        $well = [
+            'ciphertext' => $ciphertext,
+            'nonce' => $nonce,
+            'key_id' => 'k1',
+            'algorithm' => 'xchacha20poly1305-ietf',
+        ];
         $rows = [
             'downgraded algorithm' => [['algorithm' => 'aes-128-ecb'] + $well, 'algorithm is unsupported'],
             'empty algorithm' => [['algorithm' => ''] + $well, 'algorithm is unsupported'],
@@ -41,8 +46,14 @@ final class EncryptedEnvelopeTest extends TestCase
                 ['ciphertext' => str_repeat('A', 1_398_105)] + $well,
                 'ciphertext exceeds its bound',
             ],
-            'nonce is truncated' => [['nonce' => base64_encode(str_repeat("\x11", 8))] + $well, 'nonce has an invalid size'],
-            'nonce is oversized' => [['nonce' => base64_encode(str_repeat("\x11", 25))] + $well, 'nonce has an invalid size'],
+            'nonce is truncated' => [
+                ['nonce' => base64_encode(str_repeat("\x11", 8))] + $well,
+                'nonce has an invalid size',
+            ],
+            'nonce is oversized' => [
+                ['nonce' => base64_encode(str_repeat("\x11", 25))] + $well,
+                'nonce has an invalid size',
+            ],
             'ciphertext is empty' => [['ciphertext' => ''] + $well, 'shorter than its authentication tag'],
             'ciphertext is below the tag' => [
                 ['ciphertext' => base64_encode(str_repeat("\x22", 15))] + $well,
@@ -95,7 +106,10 @@ final class EncryptedEnvelopeTest extends TestCase
         $this->assertSame($storage, $envelope->toStorage(), 'The same envelope always produces the same row.');
         $this->assertSame(
             json_encode($storage, JSON_THROW_ON_ERROR),
-            json_encode((new EncryptedEnvelope($ciphertext, $nonce, 'application-secret-v1'))->toStorage(), JSON_THROW_ON_ERROR),
+            json_encode(
+                (new EncryptedEnvelope($ciphertext, $nonce, 'application-secret-v1'))->toStorage(),
+                JSON_THROW_ON_ERROR,
+            ),
             'Two envelopes with the same parts serialize byte-identically.',
         );
 
@@ -122,14 +136,31 @@ final class EncryptedEnvelopeTest extends TestCase
     {
         $nonce = str_repeat("\x11", EncryptedEnvelope::NONCE_BYTES);
         $this->assertThrows(
-            static fn (): EncryptedEnvelope => new EncryptedEnvelope(str_repeat("\x22", 48), $nonce, 'k1', 'xchacha20poly1305'),
+            static fn (): EncryptedEnvelope => new EncryptedEnvelope(
+                str_repeat("\x22", 48),
+                $nonce,
+                'k1',
+                'xchacha20poly1305',
+            ),
             InvalidEnvelope::class,
             'A near-miss algorithm spelling is refused.',
         );
-        $atMinimum = new EncryptedEnvelope(str_repeat("\x22", EncryptedEnvelope::MINIMUM_CIPHERTEXT_BYTES), $nonce, 'k1');
+        $atMinimum = new EncryptedEnvelope(
+            str_repeat("\x22", EncryptedEnvelope::MINIMUM_CIPHERTEXT_BYTES),
+            $nonce,
+            'k1',
+        );
         $this->assertSame(16, strlen($atMinimum->ciphertext), 'A ciphertext of exactly the tag length is admitted.');
-        $atMaximum = new EncryptedEnvelope(str_repeat("\x22", EncryptedEnvelope::MAXIMUM_CIPHERTEXT_BYTES), $nonce, 'k1');
-        $this->assertSame(1_048_576, strlen($atMaximum->ciphertext), 'A ciphertext of exactly one mebibyte is admitted.');
+        $atMaximum = new EncryptedEnvelope(
+            str_repeat("\x22", EncryptedEnvelope::MAXIMUM_CIPHERTEXT_BYTES),
+            $nonce,
+            'k1',
+        );
+        $this->assertSame(
+            1_048_576,
+            strlen($atMaximum->ciphertext),
+            'A ciphertext of exactly one mebibyte is admitted.',
+        );
         $error = $this->assertThrows(
             static fn (): EncryptedEnvelope => new EncryptedEnvelope(
                 str_repeat("\x22", EncryptedEnvelope::MAXIMUM_CIPHERTEXT_BYTES + 1),
@@ -139,7 +170,11 @@ final class EncryptedEnvelopeTest extends TestCase
             InvalidEnvelope::class,
             'One byte over the bound is refused.',
         );
-        $this->assertStringContains('exceeds its bound', $error->getMessage(), 'The oversize refusal states its reason.');
+        $this->assertStringContains(
+            'exceeds its bound',
+            $error->getMessage(),
+            'The oversize refusal states its reason.',
+        );
         $this->assertSame(24, EncryptedEnvelope::NONCE_BYTES, 'The nonce is 192 bits.');
         $this->assertSame(16, EncryptedEnvelope::MINIMUM_CIPHERTEXT_BYTES, 'The tag is 128 bits.');
     }

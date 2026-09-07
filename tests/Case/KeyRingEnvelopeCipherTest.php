@@ -49,11 +49,22 @@ final class KeyRingEnvelopeCipherTest extends TestCase
             $after->decrypt(EncryptedEnvelope::fromStorage($stored), Fixture::binding()),
             'A pre-rotation envelope opens under the retired key.',
         );
-        $this->assertSame('record-v2', $after->encrypt('second-generation', Fixture::binding())->keyId, 'New writes use v2.');
+        $this->assertSame(
+            'record-v2',
+            $after->encrypt('second-generation', Fixture::binding())->keyId,
+            'New writes use v2.',
+        );
 
-        $resealed = $after->encrypt($after->decrypt(EncryptedEnvelope::fromStorage($stored), Fixture::binding()), Fixture::binding());
+        $resealed = $after->encrypt(
+            $after->decrypt(EncryptedEnvelope::fromStorage($stored), Fixture::binding()),
+            Fixture::binding(),
+        );
         $this->assertSame('record-v2', $resealed->keyId, 'A re-encryption pass moves the row onto the active key.');
-        $this->assertNotSame($stored['ciphertext'], $resealed->toStorage()['ciphertext'], 'Re-sealing changes the bytes.');
+        $this->assertNotSame(
+            $stored['ciphertext'],
+            $resealed->toStorage()['ciphertext'],
+            'Re-sealing changes the bytes.',
+        );
     }
 
     /**
@@ -73,12 +84,19 @@ final class KeyRingEnvelopeCipherTest extends TestCase
         $withoutTheKey = new KeyRingEnvelopeCipher(new KeyRingKeyProvider(new KeyRing(Fixture::key('record-v2'))));
 
         $error = $this->assertThrows(
-            static fn (): string => $withoutTheKey->decrypt(EncryptedEnvelope::fromStorage($stored), Fixture::binding()),
+            static fn (): string => $withoutTheKey->decrypt(
+                EncryptedEnvelope::fromStorage($stored),
+                Fixture::binding(),
+            ),
             KeyUnavailable::class,
             'An envelope naming a key the ring does not hold is unavailable.',
         );
         $this->assertStringContains('"record-v1" is unavailable', $error->getMessage(), 'The requested key is named.');
-        $this->assertStringExcludes('should-stay-sealed', $error->getMessage() . $error->getTraceAsString(), 'No plaintext.');
+        $this->assertStringExcludes(
+            'should-stay-sealed',
+            $error->getMessage() . $error->getTraceAsString(),
+            'No plaintext.',
+        );
         $this->assertStringExcludes(Fixture::key('record-v1')->material(), $error->getTraceAsString(), 'No key bytes.');
         $this->assertStringExcludes('record-v2', $error->getMessage(), 'Held identifiers are not disclosed.');
     }
@@ -99,13 +117,21 @@ final class KeyRingEnvelopeCipherTest extends TestCase
         $plans = new KeyRingEnvelopeCipher(new KeyRingKeyProvider(new KeyRing(Fixture::key('mutation-plan-v1'))));
         $token = $plans->encrypt('plan-document', 'kumwe:business-mutation-plan:v2');
 
-        $this->assertSame('plan-document', $plans->decrypt($token, 'kumwe:business-mutation-plan:v2'), 'The owner opens it.');
+        $this->assertSame(
+            'plan-document',
+            $plans->decrypt($token, 'kumwe:business-mutation-plan:v2'),
+            'The owner opens it.',
+        );
         $error = $this->assertThrows(
             static fn (): string => $records->decrypt($token, 'kumwe:business-mutation-plan:v2'),
             KeyUnavailable::class,
             'A purpose mismatch is reported as an unavailable key, never as a decryption attempt.',
         );
-        $this->assertStringContains('"mutation-plan-v1" is unavailable', $error->getMessage(), 'The foreign key is named.');
+        $this->assertStringContains(
+            '"mutation-plan-v1" is unavailable',
+            $error->getMessage(),
+            'The foreign key is named.',
+        );
     }
 
     /**
@@ -147,7 +173,11 @@ final class KeyRingEnvelopeCipherTest extends TestCase
             KeyUnavailable::class,
             'An unavailable active key stops the write.',
         );
-        $this->assertStringExcludes(Fixture::PLAINTEXT, $error->getMessage() . $error->getTraceAsString(), 'No plaintext leaks.');
+        $this->assertStringExcludes(
+            Fixture::PLAINTEXT,
+            $error->getMessage() . $error->getTraceAsString(),
+            'No plaintext leaks.',
+        );
 
         $broken = new KeyRingEnvelopeCipher(new ScriptedKeyProvider(
             Fixture::key('record-v1'),
@@ -159,8 +189,16 @@ final class KeyRingEnvelopeCipherTest extends TestCase
             RuntimeException::class,
             'Any other provider failure propagates and stops the write.',
         );
-        $this->assertStringExcludes(Fixture::PLAINTEXT, $failure->getMessage() . $failure->getTraceAsString(), 'No plaintext.');
-        $this->assertStringExcludes(substr(Fixture::PLAINTEXT, 0, 8), $failure->getTraceAsString(), 'Not even a prefix.');
+        $this->assertStringExcludes(
+            Fixture::PLAINTEXT,
+            $failure->getMessage() . $failure->getTraceAsString(),
+            'No plaintext.',
+        );
+        $this->assertStringExcludes(
+            substr(Fixture::PLAINTEXT, 0, 8),
+            $failure->getTraceAsString(),
+            'Not even a prefix.',
+        );
     }
 
     /**

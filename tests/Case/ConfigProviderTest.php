@@ -42,7 +42,11 @@ final class ConfigProviderTest extends TestCase
             $config['dependencies']['aliases'],
             'The port aliases to its default implementation.',
         );
-        $this->assertSame([KeyRingEnvelopeCipher::class => true], $config['dependencies']['shared'], 'The cipher is shared.');
+        $this->assertSame(
+            [KeyRingEnvelopeCipher::class => true],
+            $config['dependencies']['shared'],
+            'The cipher is shared.',
+        );
         $this->assertSame($config, $provider(), 'The configuration is identical on every call.');
         $this->assertSame($config['dependencies'], $provider->getDependencies(), 'getDependencies() is the same data.');
         $this->assertSame($config, (new ConfigProvider())(), 'Two providers agree.');
@@ -64,7 +68,10 @@ final class ConfigProviderTest extends TestCase
             $this->assertTrue(class_exists($factory), "Factory {$factory} exists.");
             $this->assertTrue((new ReflectionClass($factory))->isFinal(), "Factory {$factory} is final.");
             $this->assertTrue(method_exists($factory, '__invoke'), "Factory {$factory} is invokable.");
-            $this->assertTrue(str_starts_with($factory, 'Kumwe\\Secret\\Container\\'), 'Factories live under Container.');
+            $this->assertTrue(
+                str_starts_with($factory, 'Kumwe\\Secret\\Container\\'),
+                'Factories live under Container.',
+            );
         }
         foreach ($dependencies['aliases'] as $alias => $target) {
             $this->assertTrue(interface_exists($alias), "Alias {$alias} is a package interface.");
@@ -72,6 +79,10 @@ final class ConfigProviderTest extends TestCase
             $this->assertTrue(isset($dependencies['factories'][$target]), "Alias target {$target} is factory-built.");
         }
         $this->assertTrue((new ReflectionClass(ConfigProvider::class))->isFinal(), 'The provider is final.');
-        $this->assertSame(0, (new ReflectionClass(ConfigProvider::class))->getConstructor()?->getNumberOfParameters() ?? 0, 'No ctor deps.');
+        $this->assertSame(
+            0,
+            (new ReflectionClass(ConfigProvider::class))->getConstructor()?->getNumberOfParameters() ?? 0,
+            'No ctor deps.',
+        );
     }
 }

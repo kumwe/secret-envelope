@@ -30,7 +30,11 @@ final class KeyPurposeTest extends TestCase
         $this->assertSame('record', $record->name, 'The name is carried verbatim.');
         $this->assertSame('kumwe:business-record:encryption:v2', $record->derivationLabel, 'The label is verbatim.');
         $this->assertSame('record-encryption-v1', $record->defaultKeyId, 'The default identifier is verbatim.');
-        $this->assertNotSame($record->derivationLabel, $plan->derivationLabel, 'Purposes derive under different labels.');
+        $this->assertNotSame(
+            $record->derivationLabel,
+            $plan->derivationLabel,
+            'Purposes derive under different labels.',
+        );
         $this->assertNotSame($record->defaultKeyId, $plan->defaultKeyId, 'Purposes stamp different identifiers.');
     }
 

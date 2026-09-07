@@ -23,7 +23,16 @@ final class KeyIdentifierTest extends TestCase
      */
     public function testTheGrammarAdmitsVersionedNamesAndRefusesUnsafeOnes(): void
     {
-        foreach (['k', 'record-encryption-v1', 'application-secret-v1', 'a.b_c:d-e', '0', str_repeat('x', 127)] as $ok) {
+        foreach (
+            [
+            'k',
+            'record-encryption-v1',
+            'application-secret-v1',
+            'a.b_c:d-e',
+            '0',
+            str_repeat('x', 127),
+            ] as $ok
+        ) {
             $this->assertTrue(KeyIdentifier::isValid($ok), "\"{$ok}\" is a valid identifier.");
         }
         $bad = ['', ' ', '-leading', '.leading', 'key with spaces', "tab\tbed", "new\nline", 'slash/ed', 'quote"d',

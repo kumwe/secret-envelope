@@ -166,7 +166,11 @@ abstract class TestCase
     {
         $this->assertions++;
         if ($needle !== '' && str_contains($haystack, $needle)) {
-            throw new RuntimeException(sprintf('%s A forbidden %d-byte fragment is present.', $message, strlen($needle)));
+            throw new RuntimeException(sprintf(
+                '%s A forbidden %d-byte fragment is present.',
+                $message,
+                strlen($needle),
+            ));
         }
     }
 
@@ -208,7 +212,12 @@ abstract class TestCase
     {
         $this->assertions++;
         if (count($value) !== $expected) {
-            throw new RuntimeException(sprintf('%s Expected %d elements, counted %d.', $message, $expected, count($value)));
+            throw new RuntimeException(sprintf(
+                '%s Expected %d elements, counted %d.',
+                $message,
+                $expected,
+                count($value),
+            ));
         }
     }
 

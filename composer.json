@@ -52,6 +52,7 @@
       "@docs",
       "@architecture",
       "@api",
+      "@api:docs",
       "@manifests",
       "@handoff",
       "@autoload:smoke",
@@ -59,8 +60,14 @@
       "@analyse",
       "@test",
       "@examples",
-      "@consumer"
-    ]
+      "@consumer",
+      "@security:audit",
+      "@release:parser"
+    ],
+    "api:docs": "php tools/verify-public-docs.php",
+    "api:docs:record": "php tools/verify-public-docs.php --write",
+    "security:audit": "composer audit --abandoned=fail",
+    "release:parser": "bash tools/test-release-record.sh"
   },
   "config": {
     "sort-packages": true

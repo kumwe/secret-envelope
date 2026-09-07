@@ -48,7 +48,11 @@ final class PropertyTest extends TestCase
                 $cipher->decrypt(EncryptedEnvelope::fromStorage($envelope->toStorage()), $binding),
                 "Round {$round} (seed {$seed}) round-trips through storage.",
             );
-            $this->assertSame(strlen($plaintext) + 16, strlen($envelope->ciphertext), "Round {$round} (seed {$seed}) length.");
+            $this->assertSame(
+                strlen($plaintext) + 16,
+                strlen($envelope->ciphertext),
+                "Round {$round} (seed {$seed}) length.",
+            );
         }
     }
 
@@ -112,7 +116,11 @@ final class PropertyTest extends TestCase
                 && strlen($candidate) <= KeyIdentifier::MAXIMUM_LENGTH
                 && preg_match('/^[A-Za-z0-9]/', $candidate) === 1
                 && preg_match('/^[A-Za-z0-9._:-]*$/D', $candidate) === 1;
-            $this->assertSame($expected, KeyIdentifier::isValid($candidate), "Round {$round} (seed {$seed}) classification.");
+            $this->assertSame(
+                $expected,
+                KeyIdentifier::isValid($candidate),
+                "Round {$round} (seed {$seed}) classification.",
+            );
         }
         $sodium = new SodiumEnvelopeCipher(Fixture::key('property-v3'));
         $this->assertSame('property-v3', $sodium->keyId(), 'The single-key cipher names its key.');
@@ -155,7 +163,7 @@ final class PropertyTest extends TestCase
         }
         if ($way === 0) {
             $offset = mt_rand(0, $length - 1);
-            $value[$offset] = chr(ord($value[$offset]) ^ (1 << mt_rand(0, 7)));
+            $value[$offset] = chr((ord($value[$offset]) ^ (1 << mt_rand(0, 7))) & 0xff);
 
             return $value;
         }

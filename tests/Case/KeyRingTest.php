@@ -52,7 +52,11 @@ final class KeyRingTest extends TestCase
         $this->assertSame($older, $ring->keyFor('record-v1'), 'A retired key resolves by name.');
         $this->assertSame($old, $ring->keyFor('record-v2'), 'Another retired key resolves by name.');
         $this->assertSame($active, $ring->active, 'The active key is exposed.');
-        $this->assertSame(['record-v9'], (new KeyRing(Fixture::key('record-v9')))->keyIds(), 'A ring may hold one key.');
+        $this->assertSame(
+            ['record-v9'],
+            (new KeyRing(Fixture::key('record-v9')))->keyIds(),
+            'A ring may hold one key.',
+        );
     }
 
     /**
@@ -71,7 +75,11 @@ final class KeyRingTest extends TestCase
             'A dropped or foreign key is unavailable, not attempted.',
         );
         $this->assertInstanceOf(KeyUnavailable::class, $error, 'The typed refusal is raised.');
-        $this->assertStringContains('"record-v0" is unavailable', $error->getMessage(), 'The requested name is stated.');
+        $this->assertStringContains(
+            '"record-v0" is unavailable',
+            $error->getMessage(),
+            'The requested name is stated.',
+        );
         $this->assertStringExcludes('record-v1', $error->getMessage(), 'Held identifiers are not disclosed.');
         $this->assertStringExcludes('record-v2', $error->getMessage(), 'The active identifier is not disclosed.');
         if ($error instanceof KeyUnavailable) {

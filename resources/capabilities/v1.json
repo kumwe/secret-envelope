@@ -1,0 +1,70 @@
+{
+  "schema": "kumwe-package-capabilities/v1",
+  "package": "kumwe/secret-envelope",
+  "release": "0.1.0",
+  "namespace": "Kumwe\\Secret\\",
+  "responsibility": "Portable authenticated envelopes, explicit key identity and retained-key reads.",
+  "non_responsibilities": [
+    "Master-key custody and derivation",
+    "Authorization, persistence and audit",
+    "Host purpose policy and rotation scheduling"
+  ],
+  "capabilities": [
+    {
+      "id": "secret-envelope.authenticated-encryption",
+      "title": "Authenticated envelopes",
+      "description": "XChaCha20-Poly1305 with typed bounds and failures.",
+      "symbols": [
+        "Kumwe\\Secret\\Cipher\\KeyRingEnvelopeCipher",
+        "Kumwe\\Secret\\Cipher\\SodiumEnvelopeCipher",
+        "Kumwe\\Secret\\Contract\\EnvelopeCipher",
+        "Kumwe\\Secret\\Exception\\AuthenticationFailed",
+        "Kumwe\\Secret\\Exception\\EncryptionFailed",
+        "Kumwe\\Secret\\Exception\\InvalidEnvelope",
+        "Kumwe\\Secret\\Exception\\InvalidInput",
+        "Kumwe\\Secret\\Exception\\InvalidKeyMaterial",
+        "Kumwe\\Secret\\Exception\\KeyUnavailable",
+        "Kumwe\\Secret\\Exception\\SecretDisclosureRefused",
+        "Kumwe\\Secret\\Exception\\SecretException",
+        "Kumwe\\Secret\\Exception\\ServiceBindingRefused",
+        "Kumwe\\Secret\\Value\\AssociatedData",
+        "Kumwe\\Secret\\Value\\EncryptedEnvelope",
+        "Kumwe\\Secret\\Value\\KeyIdentifier",
+        "Kumwe\\Secret\\Value\\KeyMaterial"
+      ],
+      "documentation": [
+        "docs/public-api.md",
+        "docs/security.md"
+      ]
+    },
+    {
+      "id": "secret-envelope.key-provider",
+      "title": "Key-ring provider",
+      "description": "Explicit active-key writes and retained-key reads.",
+      "symbols": [
+        "Kumwe\\Secret\\Contract\\KeyProvider",
+        "Kumwe\\Secret\\Provider\\KeyRingKeyProvider",
+        "Kumwe\\Secret\\Value\\KeyPurpose",
+        "Kumwe\\Secret\\Value\\KeyRing"
+      ],
+      "documentation": [
+        "docs/public-api.md",
+        "docs/architecture.md"
+      ]
+    },
+    {
+      "id": "secret-envelope.container",
+      "title": "Explicit container integration",
+      "description": "Deterministic shared cipher factory and canonical alias.",
+      "symbols": [
+        "Kumwe\\Secret\\ConfigProvider",
+        "Kumwe\\Secret\\Container\\KeyRingEnvelopeCipherFactory"
+      ],
+      "documentation": [
+        "docs/integration.md"
+      ]
+    }
+  ],
+  "native_requirements": null,
+  "deprecations": []
+}
