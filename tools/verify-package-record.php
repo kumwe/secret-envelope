@@ -23,7 +23,7 @@ foreach (
         throw new RuntimeException('The release record lacks a required block: ' . $key);
     }
 }
-$pattern = '/^  - path: (resources\/[a-z-]+\/v1\.json)\n    sha256: ([a-f0-9]{64})$/m';
+$pattern = '/^    - path: (resources\/[a-z-]+\/v1\.json)\n      sha256: ([a-f0-9]{64})$/m';
 preg_match_all($pattern, $record, $records, PREG_SET_ORDER);
 $seen = [];
 foreach ($records as [, $path, $digest]) {
