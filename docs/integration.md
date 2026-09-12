@@ -1,4 +1,4 @@
-# Host integration
+# Core contract and host integration
 
 Direct construction needs only the declared runtime dependencies. Run `php examples/round-trip.php` and
 `php examples/rotation.php` after Composer installation. A provider over a `KeyRing` serves new writes from its
@@ -26,3 +26,14 @@ of `EnvelopeCipher`; `KeyProvider` explicitly supplies exportable derived key by
 Persist only `EncryptedEnvelope::toStorage()` and use `fromStorage()` on reads. Recompute associated data from
 trusted host context. The package makes no authorization decision and records no audit. Update host exception
 catches to canonical package types and retain rotation, restore and audit tests.
+
+## Compatibility and test ownership
+
+The [source inventory](extraction-inventory.json) records an exact historical Core baseline. Check current
+consumers and test responsibilities before replacing old types. Keep SecretKeyPurpose, derivation labels,
+associated-data domain markers and record/mutation-plan cipher bindings under host ownership.
+
+Package tests own envelope formats, key/ring invariants, cryptographic refusals and service behavior.
+Core retains custody/derivation, per-purpose separation, cross-record binding, rotation, restore, audit,
+database and CLI tests. Split mixed tests and remove duplicate implementation-only tests together with
+their retired implementation after verified adoption. Keep unchanged external artifact evidence.

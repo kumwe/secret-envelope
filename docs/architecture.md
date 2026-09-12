@@ -18,9 +18,9 @@ promised for immutable PHP strings. Debug output redacts and serialization refus
 
 Package tests replace App's envelope, single-key cipher and portable ring unit cases after release adoption.
 Configured custody/derivation tests, rotation/restore integration, CLI and persistence remain App tests.
-See the handoff for source paths, consumers and exact split instructions.
+See [the release record](release-record.md) for source paths, consumers and exact split instructions.
 
-Intentional extraction corrections include typed SPL-compatible refusals, refusing key serialization,
+The supported contract includes typed SPL-compatible refusals, refusing key serialization,
 validating provider-returned key identity, input bounds on both cipher directions, rejecting newline ambiguity
 in associated-data coordinates, numeric identifier type preservation and checking encoded sizes before decode.
 The single-key cipher accepts `KeyMaterial` instead of two raw constructor strings. Valid stored ciphertext
