@@ -485,7 +485,9 @@ consumer_contract:
   - Run App architecture, secret rotation, restore, persistence, authorization and relevant database gates.
 ---
 
-# Package contract
+# Release contract
+
+## Package contract
 
 This record preserves exact source provenance, manifest identities, symbol mappings and consumer qualification
 requirements. Migration/change-set IDs are stable evidence references. The [Core contract](integration.md) defines
