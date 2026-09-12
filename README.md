@@ -1,15 +1,29 @@
 # Kumwe Secret Envelope
 
+[![Packagist version][version-badge]][package]
+[![CI][ci-badge]][ci]
+[![PHP requirement][php-badge]](composer.json)
+[![License][license-badge]](LICENSE)
+
+[version-badge]: https://img.shields.io/packagist/v/kumwe/secret-envelope
+[package]: https://packagist.org/packages/kumwe/secret-envelope
+[ci-badge]: https://github.com/kumwe/secret-envelope/actions/workflows/ci.yml/badge.svg?branch=main
+[ci]: https://github.com/kumwe/secret-envelope/actions/workflows/ci.yml?query=branch%3Amain
+[php-badge]: https://img.shields.io/packagist/dependency-v/kumwe/secret-envelope/php
+[license-badge]: https://img.shields.io/packagist/l/kumwe/secret-envelope
+
 Authenticated XChaCha20-Poly1305 envelopes with explicit key identity and rotation reads. Canonical namespace:
 `Kumwe\Secret`. Requires PHP 8.5 and ext-sodium. Apache-2.0.
 
-After the recorded release is published and independently verified, install an exact pre-1.0 version:
+## Installation and usage
+
+Install the published release with an exact pre-1.0 pin:
 
 ```bash
 composer require kumwe/secret-envelope:0.1.1
 ```
 
-The release record is an expectation until human merge, automation and external verification succeed.
+Review [release verification](docs/releasing.md) and key/ciphertext compatibility before upgrading.
 
 ```php
 use Kumwe\Secret\Cipher\KeyRingEnvelopeCipher;
@@ -29,6 +43,8 @@ $plaintext = $cipher->decrypt($envelope, $binding);
 Store only `$envelope->toStorage()`. Rebuild it with `EncryptedEnvelope::fromStorage()` and supply the same
 binding; never log plaintext or key bytes. The runnable [examples](examples/README.md) verify this flow and
 retired-key reads. Host custody, authorization, persistence, rotation and audit remain outside the package.
+
+## Core composition
 
 For Laminas/Mezzio, explicitly register `Kumwe\Secret\ConfigProvider::class` in the host's
 `Laminas\ConfigAggregator\ConfigAggregator` provider list and bind `KeyProvider::class` to the host's provider.
@@ -54,15 +70,17 @@ The package starts no transaction and provides no interprocess key synchronizati
 remain stable for each request or job; retirement and recovery ordering are host responsibilities.
 
 The complete [public API](docs/public-api.md), [architecture](docs/architecture.md), machine-readable manifests
-under `resources/`, and [migration handoff](MIGRATION-HANDOFF.md) define the adoption boundary and intentional
-changes from App. Public contracts are the extension points; a missing portable capability belongs upstream.
+under `resources/`, and [release evidence](docs/release-record.md) define the Core contract and
+compatibility requirements. Public contracts are the extension points; a missing portable capability belongs upstream.
+
+## Development
 
 ```bash
 composer install --no-interaction --prefer-dist
 composer check
 ```
 
-`composer check` includes syntax, docs, architecture, API/manifests/handoff, coding standards, strict static
+`composer check` includes syntax, docs, architecture, API/manifests/release contract, coding standards, strict static
 analysis, behavioral/property/corpus tests, examples, security audit, archive validation and isolated no-dev
 authoritative Composer consumption. Development also needs zip, mbstring and XML extensions for its tools.
 [Releasing](docs/releasing.md) documents compatibility, release automation, Packagist and rollback.

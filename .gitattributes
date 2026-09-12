@@ -1,7 +1,7 @@
 * text=auto eol=lf
 
 # The release archive is what the App adoption gate reads. It must ship CHARTER.md, README.md,
-# CHANGELOG.md, MIGRATION-HANDOFF.md, LICENSE, composer.json, docs/, examples/, resources/ and src/.
+# CHANGELOG.md, LICENSE, composer.json, docs/, examples/, resources/ and src/.
 # Only development and repository plumbing is excluded.
 /.editorconfig export-ignore
 /.gitattributes export-ignore

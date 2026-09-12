@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- Add live package/CI/PHP/license badges and current installation and Core custody/rotation guidance.
+- Replace handover prose and its verifier with a production release contract; preserve manifest checks.
+
+
 The newest release heading is authoritative. A human merge to main triggers the complete release gate before
 automation may create its tag and GitHub release. No release is claimed by this record alone.
 

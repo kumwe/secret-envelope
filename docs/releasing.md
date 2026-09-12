@@ -28,7 +28,7 @@ it cannot conceal a missing runtime dependency in the first stage.
 
 The independent post-publication verification includes manifest/corpus digests,
 registry availability, security, license, provenance and clean consumption. Its
-external attestation and the shipped handoff are prerequisites for App adoption.
+external attestation and the shipped release record are prerequisites for App adoption.
 Withdraw unsafe coordinates through advisory/yank mechanisms where available,
 release a corrected successor, and retain the last safe App pin. Assess stored
 ciphertext compatibility, key retention and restore safety before rollback.
@@ -42,7 +42,7 @@ release, tag and source identity. Publication does not establish `release-verifi
 Before declaring that state or SDK/App adoption, a fresh independent verifier must
 bind the exact published source/tag, archive digest, manifests, registry coordinate,
 license/security and clean-consumer results in an external RELEASE-ATTESTATION.yaml.
-The artifact and handoff must not invent their own final commit, checksum or
+The artifact and release record must not invent their own final commit, checksum or
 publication evidence. This attestation is separate from normal publication.
 
 Use the current release workflow on the default branch to retry after correcting
